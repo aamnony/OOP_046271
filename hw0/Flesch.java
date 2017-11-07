@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Flesch
-{
+public class Flesch {
     private static final String SYLLABLES = "aeiouy";
 
     /**
@@ -17,21 +16,18 @@ public class Flesch
      * @throws FileNotFoundException
      *             If given filePath doesn't point to a file.
      */
-    public static double getReadingEase(String filePath) throws FileNotFoundException
-    {
+    public static double getReadingEase(String filePath) throws FileNotFoundException {
         int sentenceCount = 0;
         int wordCount = 0;
         int syllableCount = 0;
 
         // Count sentences in the file.
-        Scanner scanner = new Scanner(new File(filePath));
+        Scanner scanner = new Scanner(new File(filePath), "UTF-8");
         scanner.useDelimiter("[.,;?!]");
 
-        while (scanner.hasNext())
-        {
+        while (scanner.hasNext()) {
             String sentence = scanner.next();
-            if (!sentence.trim().isEmpty())
-            {
+            if (!sentence.trim().isEmpty()) {
                 sentenceCount++;
             }
         }
@@ -39,31 +35,27 @@ public class Flesch
         scanner.close();
 
         // Count words and vowels in the file.
-        scanner = new Scanner(new File(filePath));
+        scanner = new Scanner(new File(filePath), "UTF-8");
+        // Use regex to match any character other than ()*&^%$#@!_+-=[]{}?;:',.
         scanner.useDelimiter("[\\ \\(\\)\\*\\&\\^\\%\\$\\#\\@\\!\\_\\+\\-\\=\\[\\]\\{\\}\\?\\;\\:\\'\\,\\.]");
 
-        while (scanner.hasNext())
-        {
+        while (scanner.hasNext()) {
             String word = scanner.next();
-            if (word.isEmpty())
-            {
+            if (word.isEmpty()) {
                 continue;
             }
             int wordSyllableCount = 0;
             wordCount++;
 
             boolean prevSyllable = false;
-            for (int i = 0; i < word.length(); i++)
-            {
+            for (int i = 0; i < word.length(); i++) {
                 char c = Character.toLowerCase(word.charAt(i));
-                if ((i == word.length() - 1) && (c == 'e'))
-                {
+                if ((i == word.length() - 1) && (c == 'e')) {
                     // Last character of the word is 'e', don't treat it as a syllable.
                     continue;
                 }
                 boolean currSyllable = (SYLLABLES.indexOf(c) >= 0);
-                if (currSyllable && !prevSyllable)
-                {
+                if (currSyllable && !prevSyllable) {
                     wordSyllableCount++;
                 }
                 prevSyllable = currSyllable;
@@ -87,10 +79,8 @@ public class Flesch
      *            The number of syllables in the text.
      * @return The Flesch reading ease grade of the given file.
      */
-    private static double getReadingEaseGrade(int sentenceCount, int wordCount, int syllableCount)
-    {
-        if (sentenceCount == 0 || wordCount == 0)
-        {
+    private static double getReadingEaseGrade(int sentenceCount, int wordCount, int syllableCount) {
+        if (sentenceCount == 0 || wordCount == 0) {
             return 100;
         }
         final double syllables = (double) syllableCount;
@@ -105,21 +95,16 @@ public class Flesch
      * @param args
      *            [0] - The path to the file.
      */
-    public static void main(String[] args)
-    {
-        if (args.length < 1)
-        {
+    public static void main(String[] args) {
+        if (args.length < 1) {
             System.out.println("Not enough arguments!");
             return;
         }
 
-        try
-        {
+        try {
             double fleschReadingEase = Flesch.getReadingEase(args[0]);
             System.out.printf("Flesch reading ease grade of \"%s\" is %.2f\n", args[0], fleschReadingEase);
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
