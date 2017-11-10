@@ -66,13 +66,13 @@ public class Wallet {
      */
     public double pay(double sum) {
         double cur = 0;
-        ArrayList<Coin> pay_coins = new ArrayList<Coin>();
-        for (Coin C : coins) {
-            cur = cur + C.getValue();
-            pay_coins.add(C);
+        ArrayList<Coin> payCoins = new ArrayList<Coin>();
+        for (Coin coin : coins) {
+            cur = cur + coin.getValue();
+            payCoins.add(coin);
             if (cur >= sum) {
-                for (Coin pay_coin : pay_coins) {
-                    coins.remove(pay_coin);
+                for (Coin payCoin : payCoins) {
+                    coins.remove(payCoin);
                 }
                 return cur;
             }
@@ -89,16 +89,16 @@ public class Wallet {
      */
     public double payMinimum(double sum) {
         double cur = 0;
-        ArrayList<Coin> pay_coins = new ArrayList<Coin>();
-        double[] coin_types = { 10, 5, 1, 0.5, 0.1 };
-        for (double type : coin_types) {
-            for (Coin C : coins) {
-                if (C.getValue() == type) {
-                    cur = cur + C.getValue();
-                    pay_coins.add(C);
+        ArrayList<Coin> payCoins = new ArrayList<Coin>();
+        double[] coinTypes = { 10, 5, 1, 0.5, 0.1 };
+        for (double type : coinTypes) {
+            for (Coin coin : coins) {
+                if (coin.getValue() == type) {
+                    cur = cur + coin.getValue();
+                    payCoins.add(coin);
                     if (cur >= sum) {
-                        for (Coin pay_coin : pay_coins) {
-                            coins.remove(pay_coin);
+                        for (Coin payCoin : payCoins) {
+                            coins.remove(payCoin);
                         }
                         return cur;
                     }
@@ -113,8 +113,8 @@ public class Wallet {
      */
     public double getWalletTotal() {
         double sum = 0;
-        for (Coin C : coins) {
-            sum = sum + C.getValue();
+        for (Coin coin : coins) {
+            sum = sum + coin.getValue();
         }
         return sum;
     }
@@ -140,8 +140,8 @@ public class Wallet {
      *         otherwise
      */
     public boolean containsCoin(double value) {
-        for (Coin C : coins) {
-            if (C.getValue() == value) return true;
+        for (Coin coin : coins) {
+            if (coin.getValue() == value) return true;
         }
         return false;
     }
