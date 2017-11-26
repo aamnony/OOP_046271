@@ -21,23 +21,20 @@ public abstract class Shape implements Cloneable {
     // Representation Invariant:
     // (this.location != null) && (this.color != null)
     // (this.location.getX() >= 0) && (this.location.getY() >= 0)
-    
+
     /**
      * @effects Checks to see if the representation invariant is being violated.
-     * @throws AssertionError if the representation invariant is violated.
+     * @throws AssertionError
+     *             if the representation invariant is violated.
      */
     private void checkRep() {
-        assert (this.location != null) :
-            "The location of a Shape cannot be null.";
-            
-        assert (this.color != null) :
-            "The color of a Shape cannot be null.";
-            
-        assert (this.location.getX() >= 0) :
-            "The X coordinate of the location of a Shape cannot negative.";
+        assert (this.location != null) : "The location of a Shape cannot be null.";
 
-        assert (this.location.getY() >= 0) :
-            "The Y coordinate of the location of a Shape cannot negative.";
+        assert (this.color != null) : "The color of a Shape cannot be null.";
+
+        assert (this.location.getX() >= 0) : "The X coordinate of the location of a Shape cannot negative.";
+
+        assert (this.location.getY() >= 0) : "The Y coordinate of the location of a Shape cannot negative.";
     }
 
     /**
