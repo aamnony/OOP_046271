@@ -20,20 +20,40 @@ public abstract class Shape implements Cloneable {
 
     // Representation Invariant:
     // (this.location != null) && (this.color != null)
-    // (this.location.x >= 0) && (this.location.y >= 0)
+    // (this.location.getX() >= 0) && (this.location.getY() >= 0)
+    
+    /**
+     * @effects Checks to see if the representation invariant is being violated.
+     * @throws AssertionError if the representation invariant is violated.
+     */
+    private void checkRep() {
+        assert (this.location != null) :
+            "The location of a Shape cannot be null.";
+            
+        assert (this.color != null) :
+            "The color of a Shape cannot be null.";
+            
+        assert (this.location.getX() >= 0) :
+            "The X coordinate of the location of a Shape cannot negative.";
+
+        assert (this.location.getY() >= 0) :
+            "The Y coordinate of the location of a Shape cannot negative.";
+    }
 
     /**
      * @effects Initializes this with a given location and color.
      */
     public Shape(Point location, Color color) {
-        setLocation(location);
-        setColor(color);
+        this.location = (Point) location.clone();
+        this.color = color;
+        checkRep();
     }
 
     /**
      * @return the top left corner of the bounding rectangle of this.
      */
     public Point getLocation() {
+        checkRep();
         return (Point) location.clone();
     }
 
@@ -43,7 +63,9 @@ public abstract class Shape implements Cloneable {
      *          location after call has completed.
      */
     public void setLocation(Point location) {
+        checkRep();
         this.location = (Point) location.clone();
+        checkRep();
     }
 
     /**
@@ -65,6 +87,7 @@ public abstract class Shape implements Cloneable {
      *         and false otherwise.
      */
     public boolean contains(Point point) {
+        checkRep();
         return getBounds().contains(point);
     }
 
@@ -72,6 +95,7 @@ public abstract class Shape implements Cloneable {
      * @return color of this.
      */
     public Color getColor() {
+        checkRep();
         return color;
     }
 
@@ -80,7 +104,9 @@ public abstract class Shape implements Cloneable {
      * @effects Sets color of this.
      */
     public void setColor(Color color) {
+        checkRep();
         this.color = color;
+        checkRep();
     }
 
     /**
@@ -93,17 +119,19 @@ public abstract class Shape implements Cloneable {
      * @effects Creates and returns a copy of this.
      */
     public Object clone() {
+        checkRep();
         Shape clonedShape;
         try {
             clonedShape = (Shape) super.clone();
             // super.clone() creates a shallow copy of this, so we need to clone all the
             // mutable fields of the cloned object as well.
             clonedShape.setLocation(clonedShape.location);
-            return clonedShape;
         } catch (CloneNotSupportedException e) {
             // This should not happen, superclass is Object and does (natively) implement
             // clone().
             throw new InternalError(e);
         }
+        checkRep();
+        return clonedShape;
     }
 }
