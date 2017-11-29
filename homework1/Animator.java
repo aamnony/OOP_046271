@@ -2,79 +2,89 @@ package homework1;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+
 import javax.swing.*;
 
+import homework1.test.RectTestShape;
+
 /**
- * Main application class for exercise #1.
- * This application allows the user to add shapes to a graphical window and
- * to animate them.
+ * Main application class for exercise #1.<br>
+ * This application allows the user to add shapes to a graphical window and to
+ * animate them.
  */
 @SuppressWarnings("serial")
 public class Animator extends JFrame implements ActionListener {
 
-    // preferred frame width and height.
+    // Preferred frame width and height.
     private static final int WINDOW_WIDTH = 600;
+    private static final int MAXIMUM_SHAPE_WIDTH = (3 * WINDOW_WIDTH) / 10;
+    private static final int MINIMUM_SHAPE_WIDTH = WINDOW_WIDTH / 10;
     private static final int WINDOW_HEIGHT = 400;
+    private static final int MAXIMUM_SHAPE_HEIGHT = (3 * WINDOW_HEIGHT) / 10;
+    private static final int MINIMUM_SHAPE_HEIGHT = WINDOW_HEIGHT / 10;
 
-    // graphical components
+    // Graphical components
     private JMenuBar menuBar;
     private JMenu fileMenu, insertMenu, helpMenu;
-    private JMenuItem newItem, exitItem,
-                        triangleItem, ovalItem,
-                        numberedOvalItem, sectorItem, aboutItem;
+    private JMenuItem newItem, exitItem, triangleItem, ovalItem, numberedOvalItem, sectorItem, aboutItem;
     private JCheckBoxMenuItem animationCheckItem;
     private JPanel mainPanel;
 
-    // shapes that have been added to this
+    // Shapes that have been added to this.
+    private Collection<Shape> shapes = new HashSet<>();
 
-    // TODO (BOM): Add and initialize a container of shapes called shapes.
-
+    private Random random = new Random();
 
     /**
      * @modifies this
-     * @effects Initializes the GUI and enables a timer that steps animation
-     *          of all shapes in this 25 times per second while animation
-     *          checkbox is selected.
+     * @effects Initializes the GUI and enables a timer that steps animation of all
+     *          shapes in this 25 times per second while animation checkbox is
+     *          selected.
      */
     public Animator() {
         super("Animator");
 
-        // create main panel and menubar
-        mainPanel = (JPanel)createMainPanel();
+        // Create main panel and menubar.
+        mainPanel = (JPanel) createMainPanel();
         getContentPane().add(mainPanel);
-        menuBar = (JMenuBar)createMenuBar();
+        menuBar = (JMenuBar) createMenuBar();
         setJMenuBar(menuBar);
 
-        // enable animation timer (ticks 25 times per second)
+        // Enable animation timer (ticks 25 times per second).
         Timer timer = new Timer(40, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (animationCheckItem.isSelected()) {
-                    // TODO (BOM): Add code for making one animation step for all
-                    //       shapes in this
 
+                    for (Iterator<Shape> iterator = shapes.iterator(); iterator.hasNext();) {
+                        Shape shape = (Shape) iterator.next();
+                        if (shape instanceof Animatable) {
+                            ((Animatable) shape).step(shape.getBounds());
+                        }
+                    }
 
-
-                    repaint();  // make sure that the shapes are redrawn
+                    // Make sure that the shapes are redrawn.
+                    repaint();
                 }
             }
         });
         timer.start();
     }
 
-
     /**
      * @return main GUI panel.
      */
     private JComponent createMainPanel() {
         JPanel mainPanel = new JPanel();
-        mainPanel.setPreferredSize(
-                new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+        mainPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         mainPanel.setBorder(BorderFactory.createLoweredBevelBorder());
         mainPanel.setBackground(Color.WHITE);
 
         return mainPanel;
     }
-
 
     /**
      * @return main GUI menubar.
@@ -117,37 +127,39 @@ public class Animator extends JFrame implements ActionListener {
         return menuBar;
     }
 
-
     /**
      * @modifies g
-     * @effects Paint this including all its shapes to g. This method is
-     *          invoked by Swing to draw components. It should not be invoked
-     *          directly, but the repaint method should be used instead in
-     *          order to schedule the component for redrawing.
+     * @effects Paint this including all its shapes to g. This method is invoked by
+     *          Swing to draw components. It should not be invoked directly, but the
+     *          repaint method should be used instead in order to schedule the
+     *          component for redrawing.
      */
     public void paint(Graphics g) {
         super.paint(g);
 
-        //TODO (BOM): Add code for drawing all shapes in this
-
+        for (Iterator<Shape> iterator = shapes.iterator(); iterator.hasNext();) {
+            Shape shape = (Shape) iterator.next();
+            // TODO:
+            // shape.draw(g);
+            shape.draw(getContentPane().getGraphics());
+        }
 
     }
 
-
     /**
      * @modifies this
-     * @effects Invoked when the user selects an action from the menubar
-     *          and performs the appropriate operation.
+     * @effects Invoked when the user selects an action from the menubar and
+     *          performs the appropriate operation.
      */
     public void actionPerformed(ActionEvent e) {
-        JMenuItem source = (JMenuItem)(e.getSource());
+        JMenuItem source = (JMenuItem) (e.getSource());
 
         // File->New : clear all shapes
         if (source.equals(newItem)) {
             shapes.clear();
             repaint();
 
-            //TODO (BOM):  Add code for number of LocationChangingNumerOval = 0
+            // TODO (BOM): Add code for number of LocationChangingNumerOval = 0
         }
 
         // File->Exit: close application
@@ -156,32 +168,65 @@ public class Animator extends JFrame implements ActionListener {
         }
 
         // Insert a shape
-        else if ((source.equals(triangleItem)) ||
-                 (source.equals(ovalItem)) ||
-                 (source.equals(numberedOvalItem)) ||
-                 (source.equals(sectorItem))) {
+        else if ((source.equals(triangleItem)) || (source.equals(ovalItem)) || (source.equals(numberedOvalItem))
+                || (source.equals(sectorItem))) {
 
             // TODO (BOM): Add code for creating the appropriate shape such that:
-            //       it is completely inside the window's bounds &&
-            //       its location, size and color are randomly selected &&
-            //       1/10*WINDOW_WIDTH <= shape.width < 3/10*WINDOW_WIDTH &&
-            //       1/10*WINDOW_HEIGHT <= shape.height < 3/10*WINDOW_HEIGHT
+            // it is completely inside the window's bounds &&
+            // its location, size and color are randomly selected &&
+            // 1/10*WINDOW_WIDTH <= shape.width < 3/10*WINDOW_WIDTH &&
+            // 1/10*WINDOW_HEIGHT <= shape.height < 3/10*WINDOW_HEIGHT
 
+            Color randomShapeColor = new Color(random.nextInt());
+
+            int randomShapeX = random.nextInt(WINDOW_WIDTH - MAXIMUM_SHAPE_WIDTH);
+            int randomShapeY = random.nextInt(WINDOW_HEIGHT - MAXIMUM_SHAPE_HEIGHT);
+            Point randomShapeLocation = new Point(randomShapeX, randomShapeY);
+
+            int randomShapeWidth = randomInt(MINIMUM_SHAPE_WIDTH, MAXIMUM_SHAPE_WIDTH);
+            int randomShapeHeight = randomInt(MINIMUM_SHAPE_HEIGHT, MAXIMUM_SHAPE_HEIGHT);
+            Dimension randomShapeSize = new Dimension(randomShapeWidth, randomShapeHeight);
+
+            Shape newShape;
+
+            // TODO: Generate correct shape based on selected menu item.
+            newShape = new RectTestShape(randomShapeLocation, randomShapeColor);
+            // if (source.equals(triangleItem)) {
+            // newShape = new LocationAndColorChangingTriangle(randomShapeLocation,
+            // randomShapeColor);
+            // } else if (source.equals(ovalItem)) {
+            // newShape = new LocationChangingOval(randomShapeLocation, randomShapeColor);
+            // } else if (source.equals(numberedOvalItem)) {
+            // newShape = new LocationChangingNumberedOval(randomShapeLocation,
+            // randomShapeColor);
+            // } else /* if (source.equals(sectorItem)) */ {
+            // newShape = new AngleChangingSector(randomShapeLocation, randomShapeColor);
+            // }
+            newShape.setSize(randomShapeSize);
+            shapes.add(newShape);
 
             repaint();
         }
 
         // Help->About : show about message dialog
-        else if (source.equals(aboutItem)){
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Animator - 1st" +
-                    " homework assignment",
-                    "About",
+        else if (source.equals(aboutItem)) {
+            JOptionPane.showMessageDialog(this, "Animator - 1st" + " homework assignment", "About",
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
+    /**
+     * @requires {@code upperBound} > {@code lowerBound}.
+     * @param lowerBound
+     *            The lower bound (inclusive) of the returned {@code int}.
+     * @param upperBound
+     *            The upper bound (exclusive) of the returned {@code int}.
+     * @return a pseudorandom {@code int} value between {@code lowerBound}
+     *         (inclusive) and the {@code upperBound} (exclusive).
+     */
+    private int randomInt(int lowerBound, int upperBound) {
+        return lowerBound + random.nextInt(upperBound - lowerBound);
+    }
 
     /**
      * @effects Animator application.
