@@ -122,7 +122,8 @@ public abstract class Shape implements Cloneable {
             clonedShape = (Shape) super.clone();
             // super.clone() creates a shallow copy of this, so we need to clone all the
             // mutable fields of the cloned object as well.
-            clonedShape.setLocation(clonedShape.location);
+            clonedShape.setLocation(this.location);
+            clonedShape.setColor(this.color);
         } catch (CloneNotSupportedException e) {
             // This should not happen, superclass is Object and does (natively) implement
             // clone().
