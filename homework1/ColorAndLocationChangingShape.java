@@ -1,6 +1,7 @@
 package homework1;
 
 import java.awt.*;
+import java.util.Random;
 
 
 /**
@@ -9,7 +10,7 @@ import java.awt.*;
  * Thus, a typical LocationChaningShape consists of the following set of
  * properties: {location, color, shape, size, velocity}
  */
-public abstract class LocationAndColorChangingShape extends LocationChangingShape{
+public abstract class ColorAndLocationChangingShape extends LocationChangingShape{
 
     // TODO (BOM): Write Abstraction Function
 
@@ -22,11 +23,18 @@ public abstract class LocationAndColorChangingShape extends LocationChangingShap
      *          object is set to a random integral value i such that
      *          -5 <= i <= 5 and i != 0
      */
-    LocationAndColorChangingShape(Point location, Color color) {
-        // TODO (BOM): Implement this constructor
-
+    ColorAndLocationChangingShape(Point location, Color color) {
+        super(location, color);
     }
 
+    private Color get_random_color() {
+        Random rand = new Random();
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
+        Color randomColor = new Color(r, g, b);
+        return randomColor;
+    }
     /**
      * @modifies this
      * @effects Changes the location of this as described in the specification
@@ -36,8 +44,11 @@ public abstract class LocationAndColorChangingShape extends LocationChangingShap
 	 *			else, does not change the color of this.
      */
     public void step(Rectangle bound) {
-        // TODO (BOM): Implement this method
-
-
+        int VelocityXOrig = this.getVelocityX();
+        int VelocityYOrig = this.getVelocityY();
+        super.step(bound);
+        if(this.getVelocityY() != VelocityYOrig || this.getVelocityX() != VelocityXOrig) {
+            this.setColor(get_random_color());
+        }
     }
 }
