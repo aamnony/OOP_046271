@@ -4,8 +4,8 @@ import java.awt.Dimension;
 
 /**
  * Thrown to indicate that a {@link Shape} cannot be resized to a specified
- * dimension. <br>
- * Contains an optional alternative dimension that is supported by the
+ * {@link Dimension}. <br>
+ * Contains an optional alternative {@link Dimension} that is supported by the
  * {@link Shape}.
  */
 public class ImpossibleSizeException extends IllegalArgumentException {
@@ -28,6 +28,9 @@ public class ImpossibleSizeException extends IllegalArgumentException {
         this.alternativeDimension = alternativeDimension;
     }
 
+    /**
+     * @return the optional alternative {@link Dimension}.
+     */
     public Dimension getAlternativeDimension() {
         return alternativeDimension;
     }
