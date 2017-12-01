@@ -62,7 +62,7 @@ public class Animator extends JFrame implements ActionListener {
                     for (Iterator<Shape> iterator = shapes.iterator(); iterator.hasNext();) {
                         Shape shape = (Shape) iterator.next();
                         if (shape instanceof Animatable) {
-                            ((Animatable) shape).step(shape.getBounds());
+                            ((Animatable) shape).step(mainPanel.getBounds());
                         }
                     }
 
@@ -191,18 +191,23 @@ public class Animator extends JFrame implements ActionListener {
 
             // TODO: Generate correct shape based on selected menu item.
             newShape = new RectTestShape(randomShapeLocation, randomShapeColor);
-            // if (source.equals(triangleItem)) {
-            // newShape = new LocationAndColorChangingTriangle(randomShapeLocation,
-            // randomShapeColor);
-            // } else if (source.equals(ovalItem)) {
-            // newShape = new LocationChangingOval(randomShapeLocation, randomShapeColor);
-            // } else if (source.equals(numberedOvalItem)) {
-            // newShape = new LocationChangingNumberedOval(randomShapeLocation,
-            // randomShapeColor);
-            // } else /* if (source.equals(sectorItem)) */ {
-            // newShape = new AngleChangingSector(randomShapeLocation, randomShapeColor);
-            // }
-            newShape.setSize(randomShapeSize);
+            if (source.equals(triangleItem)) {
+                 newShape = new LocationAndColorChangingTriangle(randomShapeLocation,
+                 randomShapeColor);
+             } else if (source.equals(ovalItem)) {
+                 newShape = new LocationChangingOval(randomShapeLocation, randomShapeColor);
+             } else if (source.equals(numberedOvalItem)) {
+                 newShape = new LocationChangingNumberedOval(randomShapeLocation,
+                 randomShapeColor);
+             } else /* if (source.equals(sectorItem)) */ {
+                 newShape = new AngleChangingSector(randomShapeLocation, randomShapeColor);
+             }
+            try {
+                 newShape.setSize(randomShapeSize);
+            }catch (ImpossibleSizeException SizeExp) {
+                randomShapeSize = SizeExp.getAlternativeDimension();
+                newShape.setSize(randomShapeSize);
+            }
             shapes.add(newShape);
 
             repaint();
