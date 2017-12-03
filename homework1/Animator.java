@@ -9,8 +9,6 @@ import java.util.Random;
 
 import javax.swing.*;
 
-import homework1.test.RectTestShape;
-
 /**
  * Main application class for exercise #1.<br>
  * This application allows the user to add shapes to a graphical window and to
@@ -157,7 +155,7 @@ public class Animator extends JFrame implements ActionListener {
             shapes.clear();
             repaint();
 
-            // TODO (BOM): Add code for number of LocationChangingNumerOval = 0
+            LocationChangingNumberedOval.resetOvalsCount();
         }
 
         // File->Exit: close application
