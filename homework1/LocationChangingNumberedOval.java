@@ -9,14 +9,14 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
     /**
      * Contains the number of {@code LocationChangingNumberedOval}s in the program.
      */
-    private static int NUM_OVALS = 1;
+    private static int NUM_OVALS = 0;
 
     private int number;
 
     LocationChangingNumberedOval(Point location, Color color) {
         super(location, color);
-        this.number = NUM_OVALS;
         NUM_OVALS++;
+        this.number = NUM_OVALS;
     }
 
     @Override
