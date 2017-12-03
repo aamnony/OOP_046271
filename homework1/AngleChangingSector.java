@@ -8,32 +8,32 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 public class AngleChangingSector extends Shape implements Animatable {
-    private int startAngle, arcAngle;
+
+    private Random random = new Random();
+    private int startAngle;
+    private int arcAngle;
     private Dimension dimension;
     private int direction;
 
-    
     public AngleChangingSector(Point location, Color color) {
         super(location, color);
-        Random rand = new Random();
-        this.startAngle = rand.nextInt(359);
-        this.arcAngle = rand.nextInt(359);
+        this.startAngle = random.nextInt(359);
+        this.arcAngle = random.nextInt(359);
         this.direction = 1; // default growing direction
     }
 
     @Override
     public void step(Rectangle bound) {
-        if(this.arcAngle == 359)
+        if (this.arcAngle == 359)
             this.direction = -1;
-        else if(this.arcAngle == 0)
-            this.direction = 1;
-        
+        else if (this.arcAngle == 0) this.direction = 1;
+
         this.arcAngle = this.arcAngle + this.direction;
     }
 
     @Override
     public void setSize(Dimension dimension) throws ImpossibleSizeException {
-        this.dimension= dimension;        
+        this.dimension = dimension;
     }
 
     @Override

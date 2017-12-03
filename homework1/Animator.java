@@ -139,8 +139,6 @@ public class Animator extends JFrame implements ActionListener {
 
         for (Iterator<Shape> iterator = shapes.iterator(); iterator.hasNext();) {
             Shape shape = (Shape) iterator.next();
-            // TODO:
-            // shape.draw(g);
             shape.draw(getContentPane().getGraphics());
         }
 
@@ -171,12 +169,6 @@ public class Animator extends JFrame implements ActionListener {
         else if ((source.equals(triangleItem)) || (source.equals(ovalItem)) || (source.equals(numberedOvalItem))
                 || (source.equals(sectorItem))) {
 
-            // TODO (BOM): Add code for creating the appropriate shape such that:
-            // it is completely inside the window's bounds &&
-            // its location, size and color are randomly selected &&
-            // 1/10*WINDOW_WIDTH <= shape.width < 3/10*WINDOW_WIDTH &&
-            // 1/10*WINDOW_HEIGHT <= shape.height < 3/10*WINDOW_HEIGHT
-
             Color randomShapeColor = new Color(random.nextInt());
 
             int randomShapeX = random.nextInt(WINDOW_WIDTH - MAXIMUM_SHAPE_WIDTH);
@@ -188,24 +180,20 @@ public class Animator extends JFrame implements ActionListener {
             Dimension randomShapeSize = new Dimension(randomShapeWidth, randomShapeHeight);
 
             Shape newShape;
-
-            // TODO: Generate correct shape based on selected menu item.
-            newShape = new RectTestShape(randomShapeLocation, randomShapeColor);
             if (source.equals(triangleItem)) {
-                 newShape = new LocationAndColorChangingTriangle(randomShapeLocation,
-                 randomShapeColor);
-             } else if (source.equals(ovalItem)) {
-                 newShape = new LocationChangingOval(randomShapeLocation, randomShapeColor);
-             } else if (source.equals(numberedOvalItem)) {
-                 newShape = new LocationChangingNumberedOval(randomShapeLocation,
-                 randomShapeColor);
-             } else /* if (source.equals(sectorItem)) */ {
-                 newShape = new AngleChangingSector(randomShapeLocation, randomShapeColor);
-             }
+                newShape = new LocationAndColorChangingTriangle(randomShapeLocation, randomShapeColor);
+            } else if (source.equals(ovalItem)) {
+                newShape = new LocationChangingOval(randomShapeLocation, randomShapeColor);
+            } else if (source.equals(numberedOvalItem)) {
+                newShape = new LocationChangingNumberedOval(randomShapeLocation, randomShapeColor);
+            } else /* if (source.equals(sectorItem)) */ {
+                newShape = new AngleChangingSector(randomShapeLocation, randomShapeColor);
+            }
+
             try {
-                 newShape.setSize(randomShapeSize);
-            }catch (ImpossibleSizeException SizeExp) {
-                randomShapeSize = SizeExp.getAlternativeDimension();
+                newShape.setSize(randomShapeSize);
+            } catch (ImpossibleSizeException ise) {
+                randomShapeSize = ise.getAlternativeDimension();
                 newShape.setSize(randomShapeSize);
             }
             shapes.add(newShape);

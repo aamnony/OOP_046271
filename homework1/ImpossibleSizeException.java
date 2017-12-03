@@ -11,7 +11,7 @@ import java.awt.Dimension;
 public class ImpossibleSizeException extends IllegalArgumentException {
 
     private static final long serialVersionUID = -2878406534744720082L;
-    
+
     private Dimension alternativeDimension;
 
     /**

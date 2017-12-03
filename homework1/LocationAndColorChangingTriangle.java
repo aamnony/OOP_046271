@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-public class LocationAndColorChangingTriangle extends ColorAndLocationChangingShape{
+public class LocationAndColorChangingTriangle extends ColorAndLocationChangingShape {
     private Dimension dimension;
 
     LocationAndColorChangingTriangle(Point location, Color color) {
@@ -16,7 +16,7 @@ public class LocationAndColorChangingTriangle extends ColorAndLocationChangingSh
 
     @Override
     public void setSize(Dimension dimension) throws ImpossibleSizeException {
-        if(dimension.getHeight() != dimension.getWidth()) {
+        if (dimension.getHeight() != dimension.getWidth()) {
             double size = dimension.getHeight();
             dimension.setSize(size, size);
             throw new ImpossibleSizeException(dimension);
