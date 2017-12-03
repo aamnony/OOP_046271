@@ -23,9 +23,8 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
     public void draw(Graphics g) {
         super.draw(g);
         g.setColor(new Color(0, 0, 0)); // Black
-        int middleX = this.getLocation().x + this.dimension.width / 2;
-        int middleY = this.getLocation().y + this.dimension.height / 2;
-        g.drawString(String.valueOf(number), middleX, middleY);
+        Point middle = getMiddle();
+        g.drawString(String.valueOf(number), middle.x, middle.y);
     }
 
     /**

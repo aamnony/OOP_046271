@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-public class LocationChangingOval extends LocationChangingShape{
-    protected Dimension dimension;
+public class LocationChangingOval extends LocationChangingShape {
+    private Dimension dimension;
 
     LocationChangingOval(Point location, Color color) {
         super(location, color);
@@ -16,8 +16,8 @@ public class LocationChangingOval extends LocationChangingShape{
 
     @Override
     public void setSize(Dimension dimension) throws ImpossibleSizeException {
-        this.dimension= dimension;
-        
+        this.dimension = dimension;
+
     }
 
     @Override
@@ -29,9 +29,16 @@ public class LocationChangingOval extends LocationChangingShape{
     @Override
     public void draw(Graphics g) {
         int x = this.getLocation().x;
-        int y = this.getLocation().y; 
+        int y = this.getLocation().y;
         g.setColor(this.getColor());
         g.fillOval(x, y, dimension.width, dimension.height);
+    }
+
+    
+    public Point getMiddle() {
+        int middleX = this.getLocation().x + this.dimension.width / 2;
+        int middleY = this.getLocation().y + this.dimension.height / 2;
+        return new Point(middleX, middleY);
     }
 
 }
