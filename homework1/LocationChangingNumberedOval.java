@@ -22,7 +22,7 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        g.setColor(new Color(0, 0, 0)); // Black
+        g.setColor(Color.BLACK);
         Point middle = getMiddle();
         g.drawString(String.valueOf(number), middle.x, middle.y);
     }
