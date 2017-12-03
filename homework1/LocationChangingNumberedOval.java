@@ -13,7 +13,7 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
 
     private int number;
 
-    LocationChangingNumberedOval(Point location, Color color) {
+    public LocationChangingNumberedOval(Point location, Color color) {
         super(location, color);
         NUM_OVALS++;
         this.number = NUM_OVALS;

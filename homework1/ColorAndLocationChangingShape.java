@@ -9,7 +9,7 @@ import java.util.Random;
  * of the following set of properties: {location, color, shape, size, velocity}
  */
 public abstract class ColorAndLocationChangingShape extends LocationChangingShape {
-    private Random random = new Random();
+    private Random random;
 
     // TODO (BOM): Write Abstraction Function
 
@@ -20,8 +20,9 @@ public abstract class ColorAndLocationChangingShape extends LocationChangingShap
      *          horizontal and vertical velocities of the new object is set to a
      *          random integral value i such that -5 <= i <= 5 and i != 0
      */
-    ColorAndLocationChangingShape(Point location, Color color) {
+    public ColorAndLocationChangingShape(Point location, Color color) {
         super(location, color);
+        random = new Random();
     }
 
     private Color getRandomColor() {

@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public abstract class LocationChangingShape extends Shape implements Animatable {
 
-    private Random random = new Random();
+    private Random random;
     private int velocityX, velocityY;
 
     // TODO (BOM): Write Abstraction Function
@@ -42,8 +42,9 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
      *          horizontal and vertical velocities of the new object is set to a
      *          random integral value i such that -5 <= i <= 5 and i != 0
      */
-    LocationChangingShape(Point location, Color color) {
+    public LocationChangingShape(Point location, Color color) {
         super(location, color);
+        this.random = new Random();
         this.velocityX = getRandomVeclocity();
         this.velocityY = getRandomVeclocity();
         checkRep();

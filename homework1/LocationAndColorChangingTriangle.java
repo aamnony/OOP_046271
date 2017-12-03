@@ -9,7 +9,7 @@ import java.awt.Rectangle;
 public class LocationAndColorChangingTriangle extends ColorAndLocationChangingShape {
     private Dimension dimension;
 
-    LocationAndColorChangingTriangle(Point location, Color color) {
+    public LocationAndColorChangingTriangle(Point location, Color color) {
         super(location, color);
         dimension = null;
     }
