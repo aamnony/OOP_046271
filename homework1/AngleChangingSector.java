@@ -41,6 +41,13 @@ public class AngleChangingSector extends Shape implements Animatable {
         assert (this.direction == 1 && this.direction == -1) : "invalid direction";
     }
 
+    /**
+     * @effects Initializes this with a a given location and color. Each of the
+     *          horizontal and vertical velocities of the new object is set to a
+     *          random integral value i such that -5 <= i <= 5 and i != 0.
+     *          Each of the startAngle and arcAngle of the new object is set to a
+     *          random integral value i such that 359 <= i <= 0
+     */
     public AngleChangingSector(Point location, Color color) {
         super(location, color);
         this.random = new Random();
@@ -50,6 +57,12 @@ public class AngleChangingSector extends Shape implements Animatable {
         checkRep();
     }
 
+    /**
+     * @modifies this
+     * @effects Increases or decreases this.arcAngle by 1 degree.
+     *          If this.arcAngle reaches a limit (359 or 0) then
+     *          this.direction changes 1->-1 or -1->1.  
+     */
     @Override
     public void step(Rectangle bound) {
         checkRep();
@@ -61,6 +74,13 @@ public class AngleChangingSector extends Shape implements Animatable {
         checkRep();
     }
 
+    /**
+     * @modifies this
+     * @effects Resizes this so that its bounding rectangle has the specified
+     *          dimension. If this cannot be resized to the specified dimension =>
+     *          this is not modified, throws ImpossibleSizeException (the exception
+     *          suggests an alternative dimension that is supported by this).
+     */
     @Override
     public void setSize(Dimension dimension) throws ImpossibleSizeException {
         checkRep();
@@ -68,6 +88,9 @@ public class AngleChangingSector extends Shape implements Animatable {
         checkRep();
     }
 
+    /**
+     * @return the bounding rectangle of this.
+     */
     @Override
     public Rectangle getBounds() {
         checkRep();
@@ -75,6 +98,10 @@ public class AngleChangingSector extends Shape implements Animatable {
         return r;
     }
 
+    /**
+     * @modifies g
+     * @effects Draws this onto g.
+     */
     @Override
     public void draw(Graphics g) {
         checkRep();

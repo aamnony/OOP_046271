@@ -25,12 +25,21 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
 
     private int number;
 
+    /**
+     * @effects Initializes this with a a given location and color. Each of the
+     *          horizontal and vertical velocities of the new object is set to a
+     *          random integral value i such that -5 <= i <= 5 and i != 0
+     */
     public LocationChangingNumberedOval(Point location, Color color) {
         super(location, color);
         NUM_OVALS++;
         this.number = NUM_OVALS;
     }
 
+    /**
+     * @modifies g
+     * @effects Draws this onto g.
+     */
     @Override
     public void draw(Graphics g) {
         super.draw(g);

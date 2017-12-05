@@ -35,6 +35,9 @@ public abstract class ColorAndLocationChangingShape extends LocationChangingShap
         random = new Random();
     }
 
+    /**
+     * @return a random color
+     */
     private Color getRandomColor() {
         float r = random.nextFloat();
         float g = random.nextFloat();

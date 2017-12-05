@@ -39,7 +39,10 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
         assert (this.velocityY > 5 || this.velocityY < -5
                 || this.velocityY == 0) : "The X velocity of the LocationChangingShape has to be between -5 and 5 and not 0.";
     }
-
+    
+    /**
+     * @return a random valid velocity
+     */
     private int getRandomVeclocity() {
         int randVal;
         do {
