@@ -14,7 +14,18 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
     private Random random;
     private int velocityX, velocityY;
 
-    // TODO (BOM): Write Abstraction Function
+    // Abstraction Function:
+    // Represents a 2D geometric shape, that changes its location using this.step().
+    // where its bounding rectangle's top left
+    // corner is located at this.location, and its color is this.color.
+    // The size of the geometric shape is dependent on the type of the shape (e.g.
+    // triangle, rectangle, oval) and is set via this.setSize(Dimension).
+    // its velocity is randomized upon creation
+    // but can be modified with this.setVelocity(int velocityX, int velocityY)
+    
+    // Representation Invariant:
+    // (this.velocityX > 5) && (this.velocityX > 5) && (this.velocityX != 0)
+    // (this.velocityY > 5) && (this.velocityY > 5) && (this.velocityY != 0)
 
     /**
      * @effects Checks to see if the representation invariant is being violated.

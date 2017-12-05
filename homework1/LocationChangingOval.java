@@ -10,6 +10,17 @@ import java.awt.Rectangle;
 public class LocationChangingOval extends LocationChangingShape {
     private Dimension dimension;
 
+    // Abstraction Function:
+    // Represents a 2D oval, changes its location using this.step().
+    // where its bounding rectangle's top left
+    // corner is located at this.location, and its color is this.color.
+    // The size of the geometric shape is set via this.setSize(Dimension).
+    // its velocity is randomized upon creation
+    // but can be modified with this.setVelocity(int velocityX, int velocityY)
+    
+    // Representation Invariant:
+    // this class doesnt have any special fields therefore doesnt require CheckRep.
+    
     LocationChangingOval(Point location, Color color) {
         super(location, color);
     }

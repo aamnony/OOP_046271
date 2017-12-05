@@ -11,9 +11,19 @@ import java.util.Random;
 public abstract class ColorAndLocationChangingShape extends LocationChangingShape {
     private Random random;
 
-    // TODO (BOM): Write Abstraction Function
+    // Abstraction Function:
+    // Represents a 2D geometric shape, that changes its location using this.step().
+    // its bounding rectangle's top left corner is located at this.location,
+    // and its color is this.color.
+    // The size of the geometric shape is dependent on the type of the shape (e.g.
+    // triangle, rectangle, oval) and is set via this.setSize(Dimension).
+    // its velocity is randomized upon creation
+    // but can be modified with this.setVelocity(int velocityX, int velocityY)
+    // each time this shape changes direction it changes its color to a random color.
+    
+    // Representation Invariant:
+    // this class doesnt have any special fields therefore doesnt require CheckRep.
 
-    // TODO (BOM): Write Representation Invariant
 
     /**
      * @effects Initializes this with a a given location and color. Each of the
