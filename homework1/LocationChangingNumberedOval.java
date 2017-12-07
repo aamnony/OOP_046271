@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class LocationChangingNumberedOval extends LocationChangingOval {
-    
+
     // Abstraction Function:
     // Represents a 2D numbered oval, the first instance of this class will
     // be numbered 1, each consecutive instance will advance that counter.
@@ -14,10 +14,10 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
     // The size of the oval is set via this.setSize(Dimension).
     // its velocity is randomized upon creation
     // but can be modified with this.setVelocity(int velocityX, int velocityY)
-    
+
     // Representation Invariant:
     // this class doesnt have any special fields therefore doesnt require CheckRep.
-    
+
     /**
      * Contains the number of {@code LocationChangingNumberedOval}s in the program.
      */

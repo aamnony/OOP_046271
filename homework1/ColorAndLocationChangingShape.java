@@ -19,11 +19,11 @@ public abstract class ColorAndLocationChangingShape extends LocationChangingShap
     // triangle, rectangle, oval) and is set via this.setSize(Dimension).
     // its velocity is randomized upon creation
     // but can be modified with this.setVelocity(int velocityX, int velocityY)
-    // each time this shape changes direction it changes its color to a random color.
-    
+    // each time this shape changes direction it changes its color to a random
+    // color.
+
     // Representation Invariant:
     // this class doesnt have any special fields therefore doesnt require CheckRep.
-
 
     /**
      * @effects Initializes this with a a given location and color. Each of the

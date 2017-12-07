@@ -17,10 +17,10 @@ public class LocationChangingOval extends LocationChangingShape {
     // The size of the geometric shape is set via this.setSize(Dimension).
     // its velocity is randomized upon creation
     // but can be modified with this.setVelocity(int velocityX, int velocityY)
-    
+
     // Representation Invariant:
     // this class doesnt have any special fields therefore doesnt require CheckRep.
-    
+
     /**
      * @effects Initializes this with a a given location and color. Each of the
      *          horizontal and vertical velocities of the new object is set to a

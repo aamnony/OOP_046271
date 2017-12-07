@@ -22,7 +22,7 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
     // triangle, rectangle, oval) and is set via this.setSize(Dimension).
     // its velocity is randomized upon creation
     // but can be modified with this.setVelocity(int velocityX, int velocityY)
-    
+
     // Representation Invariant:
     // (this.velocityX > 5) && (this.velocityX > 5) && (this.velocityX != 0)
     // (this.velocityY > 5) && (this.velocityY > 5) && (this.velocityY != 0)
@@ -39,7 +39,7 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
         assert (this.velocityY > 5 || this.velocityY < -5
                 || this.velocityY == 0) : "The X velocity of the LocationChangingShape has to be between -5 and 5 and not 0.";
     }
-    
+
     /**
      * @return a random valid velocity
      */

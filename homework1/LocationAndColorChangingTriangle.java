@@ -16,8 +16,9 @@ public class LocationAndColorChangingTriangle extends ColorAndLocationChangingSh
     // The size of the triangle is set via this.setSize(Dimension).
     // its velocity is randomized upon creation
     // but can be modified with this.setVelocity(int velocityX, int velocityY)
-    // each time this triangle changes direction it changes its color to a random color.
-    
+    // each time this triangle changes direction it changes its color to a random
+    // color.
+
     // Representation Invariant:
     // this class doesnt have any special fields therefore doesnt require CheckRep.
 
