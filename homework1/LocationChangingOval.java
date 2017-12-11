@@ -12,11 +12,7 @@ public class LocationChangingOval extends LocationChangingShape {
 
     // Abstraction Function:
     // Represents a 2D oval, changes its location using this.step().
-    // where its bounding rectangle's top left
-    // corner is located at this.location, and its color is this.color.
-    // The size of the geometric shape is set via this.setSize(Dimension).
-    // its velocity is randomized upon creation
-    // but can be modified with this.setVelocity(int velocityX, int velocityY)
+    // The size of the oval is set via this.setSize(Dimension).
 
     // Representation Invariant:
     // this class doesnt have any special fields therefore doesnt require CheckRep.
@@ -33,9 +29,7 @@ public class LocationChangingOval extends LocationChangingShape {
     /**
      * @modifies this
      * @effects Resizes this so that its bounding rectangle has the specified
-     *          dimension. If this cannot be resized to the specified dimension =>
-     *          this is not modified, throws ImpossibleSizeException (the exception
-     *          suggests an alternative dimension that is supported by this).
+     *          dimension.
      */
     @Override
     public void setSize(Dimension dimension) throws ImpossibleSizeException {

@@ -10,12 +10,8 @@ public class LocationAndColorChangingTriangle extends ColorAndLocationChangingSh
     private Dimension dimension;
 
     // Abstraction Function:
-    // Represents a 2D triangle, that changes its location using this.step().
-    // its bounding rectangle's top left corner is located at this.location,
-    // and its color is this.color.
+    // Represents a 2D triangle, that changes its location. 
     // The size of the triangle is set via this.setSize(Dimension).
-    // its velocity is randomized upon creation
-    // but can be modified with this.setVelocity(int velocityX, int velocityY)
     // each time this triangle changes direction it changes its color to a random
     // color.
 

@@ -9,11 +9,6 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
     // Abstraction Function:
     // Represents a 2D numbered oval, the first instance of this class will
     // be numbered 1, each consecutive instance will advance that counter.
-    // the oval changes its location using this.step(). its bounding rectangle's
-    // top left corner is located at this.location, and its color is this.color.
-    // The size of the oval is set via this.setSize(Dimension).
-    // its velocity is randomized upon creation
-    // but can be modified with this.setVelocity(int velocityX, int velocityY)
 
     // Representation Invariant:
     // this class doesnt have any special fields therefore doesnt require CheckRep.
