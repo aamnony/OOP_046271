@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class AngleChangingSector extends Shape implements Animatable {
 
-    private Random random;
     private int startAngle;
     private int arcAngle;
     private Dimension dimension;
@@ -45,14 +44,12 @@ public class AngleChangingSector extends Shape implements Animatable {
      * @effects Initializes this with a a given location and color. Each of the
      *          horizontal and vertical velocities of the new object is set to a
      *          random integral value i such that -5 <= i <= 5 and i != 0. Each of
-     *          the startAngle and arcAngle of the new object is set to a random
-     *          integral value i such that 359 <= i <= 0
+     *          the startAngle and arcAngle are set to the given values.
      */
-    public AngleChangingSector(Point location, Color color) {
+    public AngleChangingSector(Point location, Color color, int startAngle, int arcAngle) {
         super(location, color);
-        this.random = new Random();
-        this.startAngle = random.nextInt(359);
-        this.arcAngle = random.nextInt(359);
+        this.startAngle = startAngle;
+        this.arcAngle = startAngle;
         this.direction = 1; // default growing direction
         checkRep();
     }
