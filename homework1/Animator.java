@@ -24,6 +24,8 @@ public class Animator extends JFrame implements ActionListener {
     private static final int WINDOW_HEIGHT = 400;
     private static final int MAXIMUM_SHAPE_HEIGHT = (3 * WINDOW_HEIGHT) / 10;
     private static final int MINIMUM_SHAPE_HEIGHT = WINDOW_HEIGHT / 10;
+    private static final int MINIMUM_ANGLE = 0;
+    private static final int MAXIMUM_ANGLE = 359;
 
     // Graphical components
     private JMenuBar menuBar;
@@ -185,7 +187,9 @@ public class Animator extends JFrame implements ActionListener {
             } else if (source.equals(numberedOvalItem)) {
                 newShape = new LocationChangingNumberedOval(randomShapeLocation, randomShapeColor);
             } else /* if (source.equals(sectorItem)) */ {
-                newShape = new AngleChangingSector(randomShapeLocation, randomShapeColor);
+                int startAngle = randomInt(MINIMUM_ANGLE, MAXIMUM_ANGLE); 
+                int arcAngle = randomInt(MINIMUM_ANGLE, MAXIMUM_ANGLE);
+                newShape = new AngleChangingSector(randomShapeLocation, randomShapeColor, startAngle, arcAngle); 
             }
 
             try {
