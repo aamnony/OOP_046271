@@ -2,9 +2,11 @@ package homework2;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -195,9 +197,25 @@ public class BipartiteGraph<L> {
     /**
      * @return A {@link List} of all the node labels in this graph.
      */
-    public List<L> getAllNodes() {
+    public List<L> getNodes() {
         checkRep();
         return new ArrayList<>(labelNodeMap.keySet());
+    }
+
+    /**
+     * @return A {@link List} of all the labels of nodes with the given color, in
+     *         this graph.
+     */
+    public List<L> getNodes(boolean white) {
+        checkRep();
+        List<L> labels = new ArrayList<>(labelNodeMap.size() / 2);
+
+        for (Entry<L, Node<L>> entry : labelNodeMap.entrySet()) {
+            if (entry.getValue().isWhite == white) {
+                labels.add(entry.getKey());
+            }
+        }
+        return labels;
     }
 
     /**
@@ -210,9 +228,8 @@ public class BipartiteGraph<L> {
         checkRep();
         if (labelNodeMap.containsKey(nodeLabel)) {
             return new ArrayList<>(labelNodeMap.get(nodeLabel).outgoingEdges.keySet());
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -225,9 +242,8 @@ public class BipartiteGraph<L> {
         checkRep();
         if (labelNodeMap.containsKey(nodeLabel)) {
             return new ArrayList<>(labelNodeMap.get(nodeLabel).incomingEdges.keySet());
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -260,6 +276,34 @@ public class BipartiteGraph<L> {
 
         Node<L> node = labelNodeMap.get(childNodeLabel);
         return node.getParent(edgeLabel);
+    }
+
+    /**
+     * @return A {@link List} of all the edge labels, connecting out from the node
+     *         labeled {@code nodeLabel}, in this graph.<br>
+     *         If no node labeled {@code nodeLabel} exists in this graph,
+     *         {@code null} is returned.
+     */
+    public List<L> getOutgoingEdges(L nodeLabel) {
+        checkRep();
+        if (labelNodeMap.containsKey(nodeLabel)) {
+            return new ArrayList<>(labelNodeMap.get(nodeLabel).outgoingEdges.values());
+        }
+        return null;
+    }
+
+    /**
+     * @return A {@link List} of all the edge labels, connecting into the node
+     *         labeled {@code nodeLabel}, in this graph.<br>
+     *         If no node labeled {@code nodeLabel} exists in this graph,
+     *         {@code null} is returned.
+     */
+    public List<L> getIncomingEdges(L nodeLabel) {
+        checkRep();
+        if (labelNodeMap.containsKey(nodeLabel)) {
+            return new ArrayList<>(labelNodeMap.get(nodeLabel).incomingEdges.values());
+        }
+        return null;
     }
 
     /**
