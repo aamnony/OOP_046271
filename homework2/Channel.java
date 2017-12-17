@@ -13,7 +13,7 @@ public class Channel implements Simulatable<String> {
     private double total;
     ArrayList<Transaction> workingBuffer;
     private String label;
-    
+
     /**
      * @requires limit >= 0, label != null
      * @modifies this
@@ -28,54 +28,53 @@ public class Channel implements Simulatable<String> {
 
     /**
      * @modifies this, graph
-     * @effects Simulates this, goes over all transactions that are
-     *          currently in this.workingBuffer and transfers them to 
-     *          participant connected to it.
+     * @effects Simulates this, goes over all transactions that are currently in
+     *          this.workingBuffer and transfers them to participant connected to
+     *          it.
      */
     @Override
     public void simulate(BipartiteGraph<String> graph) {
-        String participantLabel = graph.getChildren(this.label).get(0); // we know there is only one child 
-        Participant P = (Participant) graph.getNodeData(participantLabel);
-        
+        String participantLabel = graph.getChildren(this.label).iterator().next(); // we know there is only one child
+        Participant p = (Participant) graph.getNodeData(participantLabel);
+
         Iterator<Transaction> iterator = workingBuffer.iterator();
-        while(iterator.hasNext())
-        {
-            Transaction T = iterator.next();
-            P.receiveTransaction(T);
+        while (iterator.hasNext()) {
+            Transaction t = iterator.next();
+            p.receiveTransaction(t);
             iterator.remove();
         }
     }
-    
+
     /**
      * @modifies this.workingBuffer
-     * @effects adds a transaction to the working queue.
-     *          will be handled on the next call to simulate.
+     * @effects adds a transaction to the working queue. will be handled on the next
+     *          call to simulate.
      */
     public void receiveTransaction(Transaction newTransaction) {
-        if(this.total + newTransaction.getValue() < limit) {
+        if (this.total + newTransaction.getValue() < limit) {
             throw new IlligalTransactionException();
         }
         workingBuffer.add(newTransaction);
     }
-    
+
     /**
-     * @return true if the given transaction can be received.
-     *         false if the channel will overflow given the transaction.
+     * @return true if the given transaction can be received. false if the channel
+     *         will overflow given the transaction.
      */
     public boolean canReceiveTransaction(Transaction newTransaction) {
-        if(this.total + newTransaction.getValue() < limit) {
+        if (this.total + newTransaction.getValue() < limit) {
             return true;
         }
         return false;
     }
-    
+
     /**
-     * @return a string describing all the trasnactions currently in this channel.
+     * @return a string describing all the transactions currently in this channel.
      */
-    public String getWorkingBufferString(){
+    public String getWorkingBufferString() {
         StringBuffer str = new StringBuffer();
-        for(Transaction T : this.workingBuffer) {
-            str.append(T.toString());
+        for (Transaction t : this.workingBuffer) {
+            str.append(t.toString());
             str.append(" ");
         }
         return str.toString();
