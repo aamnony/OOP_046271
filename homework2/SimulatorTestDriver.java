@@ -18,7 +18,7 @@ public class SimulatorTestDriver {
 	 * @effects Constructs a new test driver.
 	 */
 	public SimulatorTestDriver() {
-        // TODO: Implement this constructor
+	    this.simulators = new HashMap<>();
 	}
 
 	/**
@@ -28,7 +28,8 @@ public class SimulatorTestDriver {
 	 *          initially empty.
 	 */
 	public void createSimulator(String simName) {
-	    // TODO: Implement this method
+	    Simulator<String, Transaction> S = new Simulator<String, Transaction>();
+	    this.simulators.put(simName, S);
 	}
 
 	/**
@@ -42,7 +43,9 @@ public class SimulatorTestDriver {
 	 *          the simulator named simName.
 	 */
 	public void addChannel(String simName, String channelName, double limit) {
-	    // TODO: Implement this method
+	    Simulator<String, Transaction> S = this.simulators.get(simName);
+	    Channel C = new Channel(limit, channelName);
+	    S.getGraph().addNode(channelName, C, true);
 	}
 
 	/**
@@ -55,7 +58,9 @@ public class SimulatorTestDriver {
 	 *          it to the simulator named simName.
 	 */
 	public void addParticipant(String simName, String participantName, double fee) {
-        // TODO: Implement this method
+	    Simulator<String, Transaction> S = this.simulators.get(simName);
+        Participant P = new Participant(fee, participantName);
+        S.getGraph().addNode(participantName, P, false);
 	}
 
 	/**
@@ -70,7 +75,8 @@ public class SimulatorTestDriver {
 	 *          is the String edgeLabel.
 	 */
 	public void addEdge(String simName, String parentName, String childName, String edgeLabel) {
-        // TODO: Implement this method
+        Simulator<String, Transaction> S = this.simulators.get(simName);
+        S.getGraph().addEdge(parentName, childName, edgeLabel);
 	}
 
 	/**
@@ -81,7 +87,13 @@ public class SimulatorTestDriver {
 	 *          simulator named simName.
 	 */
 	public void sendTransaction(String simName, String channelName, Transaction tx) {
-        // TODO: Implement this method
+        Simulator<String, Transaction> S = this.simulators.get(simName);
+        Channel C = (Channel) S.getGraph().getNodeData(channelName);
+        if(C.canReceiveTransaction(tx))
+            C.receiveTransaction(tx);
+        else {
+            // dafaq?
+        }
     }
 	
 	
@@ -91,7 +103,9 @@ public class SimulatorTestDriver {
 	 *         channel named channelName in the simulator named simName.
 	 */
 	public String listContents(String simName, String channelName) {
-        // TODO: Implement this method
+        Simulator<String, Transaction> S = this.simulators.get(simName);
+        Channel C = (Channel) S.getGraph().getNodeData(channelName);
+        return C.getWorkingBufferString();
 	}
 
 	/**
@@ -99,16 +113,18 @@ public class SimulatorTestDriver {
 	 * @return The sum of all  Transaction values stored in the storage of the participant participantName in the simulator simName
 	 */
 	public double getParticipantBalace(String simName, String participantName) {
-        // TODO: Implement this method
+	    Simulator<String, Transaction> S = this.simulators.get(simName);
+	    Participant P = (Participant) S.getGraph().getNodeData(participantName);
+	    return P.getBalance();
 	}
-	
 	/**
 	 * @requires createSimulator(simName)
 	 * @modifies simulator named simName
 	 * @effects runs simulator named simName for a single time slice.
 	 */
 	public void simulate(String simName) {
-        // TODO: Implement this method
+        Simulator<String, Transaction> S = this.simulators.get(simName);
+        S.simulate();
 	}
 
 	/**
@@ -118,7 +134,12 @@ public class SimulatorTestDriver {
 	 * @effects Prints the all edges.
 	 */
 	public void printAllEdges(String simName) {
-        // TODO: Implement this method
+        Simulator<String, Transaction> S = this.simulators.get(simName);
+        BipartiteGraph<String> graph = S.getGraph();
+        for(String nodeLabel : graph.getNodes()) {
+            for(String edgeLabel : graph.getOutgoingEdges(nodeLabel))
+                System.out.print(edgeLabel);
+        }
 	}
 
 }
