@@ -26,8 +26,8 @@ public class Simulator<L, O> {
      *          node.data simulate function.
      */
     public void simulate() {
-        Collection<L> whiteLabels = this.graph.getNodes(true); // white
-        Collection<L> blackLabels = this.graph.getNodes(false); // black
+        Collection<L> whiteLabels = this.graph.getNodes(/*isWhite=*/true);
+        Collection<L> blackLabels = this.graph.getNodes(/*isWhite=*/false);
 
         for (L nodeLabel : whiteLabels) {
             Simulatable<L> pipe = (Simulatable<L>) this.graph.getNodeData(nodeLabel);
