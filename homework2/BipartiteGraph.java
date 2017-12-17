@@ -1,10 +1,9 @@
 package homework2;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -195,20 +194,21 @@ public class BipartiteGraph<L> {
     }
 
     /**
-     * @return A {@link List} of all the node labels in this graph.
+     * @return An unmodifiable (read-only) {@link Collection} of all the node labels
+     *         in this graph.
      */
-    public List<L> getNodes() {
+    public Collection<L> getNodes() {
         checkRep();
-        return new ArrayList<>(labelNodeMap.keySet());
+        return Collections.unmodifiableSet(labelNodeMap.keySet());
     }
 
     /**
-     * @return A {@link List} of all the labels of nodes with the given color, in
-     *         this graph.
+     * @return An unmodifiable (read-only) {@link Collection} of all the labels of
+     *         nodes with the given color, in this graph.
      */
-    public List<L> getNodes(boolean white) {
+    public Collection<L> getNodes(boolean white) {
         checkRep();
-        List<L> labels = new ArrayList<>(labelNodeMap.size() / 2);
+        Set<L> labels = new HashSet<>(labelNodeMap.size() / 2);
 
         for (Entry<L, Node<L>> entry : labelNodeMap.entrySet()) {
             if (entry.getValue().isWhite == white) {
@@ -219,29 +219,29 @@ public class BipartiteGraph<L> {
     }
 
     /**
-     * @return A {@link List} of all the child node labels of the node labeled
-     *         {@code nodeLabel}, in this graph.<br>
+     * @return An unmodifiable (read-only) {@link Collection} of all the child node
+     *         labels of the node labeled {@code nodeLabel}, in this graph.<br>
      *         If no node labeled {@code nodeLabel} exists in this graph,
      *         {@code null} is returned.
      */
-    public List<L> getChildren(L nodeLabel) {
+    public Collection<L> getChildren(L nodeLabel) {
         checkRep();
         if (labelNodeMap.containsKey(nodeLabel)) {
-            return new ArrayList<>(labelNodeMap.get(nodeLabel).outgoingEdges.keySet());
+            return Collections.unmodifiableSet(labelNodeMap.get(nodeLabel).outgoingEdges.keySet());
         }
         return null;
     }
 
     /**
-     * @return A {@link List} of all the parent node labels of the node labeled
-     *         {@code nodeLabel}, in this graph.<br>
+     * @return An unmodifiable (read-only) {@link Collection} of all the parent node
+     *         labels of the node labeled {@code nodeLabel}, in this graph.<br>
      *         If no node labeled {@code nodeLabel} exists in this graph,
      *         {@code null} is returned.
      */
-    public List<L> getParents(L nodeLabel) {
+    public Collection<L> getParents(L nodeLabel) {
         checkRep();
         if (labelNodeMap.containsKey(nodeLabel)) {
-            return new ArrayList<>(labelNodeMap.get(nodeLabel).incomingEdges.keySet());
+            return Collections.unmodifiableSet(labelNodeMap.get(nodeLabel).incomingEdges.keySet());
         }
         return null;
     }
@@ -279,29 +279,31 @@ public class BipartiteGraph<L> {
     }
 
     /**
-     * @return A {@link List} of all the edge labels, connecting out from the node
-     *         labeled {@code nodeLabel}, in this graph.<br>
+     * @return An unmodifiable (read-only) {@link Collection} of all the edge
+     *         labels, connecting out from the node labeled {@code nodeLabel}, in
+     *         this graph.<br>
      *         If no node labeled {@code nodeLabel} exists in this graph,
      *         {@code null} is returned.
      */
-    public List<L> getOutgoingEdges(L nodeLabel) {
+    public Collection<L> getOutgoingEdges(L nodeLabel) {
         checkRep();
         if (labelNodeMap.containsKey(nodeLabel)) {
-            return new ArrayList<>(labelNodeMap.get(nodeLabel).outgoingEdges.values());
+            return Collections.unmodifiableCollection(labelNodeMap.get(nodeLabel).outgoingEdges.values());
         }
         return null;
     }
 
     /**
-     * @return A {@link List} of all the edge labels, connecting into the node
-     *         labeled {@code nodeLabel}, in this graph.<br>
+     * @return An unmodifiable (read-only) {@link Collection} of all the edge
+     *         labels, connecting into the node labeled {@code nodeLabel}, in this
+     *         graph.<br>
      *         If no node labeled {@code nodeLabel} exists in this graph,
      *         {@code null} is returned.
      */
-    public List<L> getIncomingEdges(L nodeLabel) {
+    public Collection<L> getIncomingEdges(L nodeLabel) {
         checkRep();
         if (labelNodeMap.containsKey(nodeLabel)) {
-            return new ArrayList<>(labelNodeMap.get(nodeLabel).incomingEdges.values());
+            return Collections.unmodifiableCollection(labelNodeMap.get(nodeLabel).incomingEdges.values());
         }
         return null;
     }
