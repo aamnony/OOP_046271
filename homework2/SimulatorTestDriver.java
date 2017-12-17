@@ -83,15 +83,10 @@ public class SimulatorTestDriver {
      * @effects pushes the Transaction into the channel named channelName in the
      *          simulator named simName.
      */
-    public void sendTransaction(String simName, String channelName, Transaction tx) {
+    public void sendTransaction(String simName, String channelName, Transaction tx) throws IlligalTransactionException {
         Simulator<String, Transaction> s = this.simulators.get(simName);
         Channel c = (Channel) s.getGraph().getNodeData(channelName);
-        if (c.canReceiveTransaction(tx)) {
-            c.receiveTransaction(tx);
-        } else {
-            // TODO: dafaq?
-            // Asaf: maybe throw an appropriate exception?
-        }
+        c.receiveTransaction(tx);
     }
 
     /**
