@@ -30,9 +30,7 @@ public class BipartiteGraphTestDriver {
     }
 
     /**
-     * @requires createGraph(graphName) && nodeName != null && neither
-     *           addBlackNode(graphName,nodeName) nor
-     *           addWhiteNode(graphName,nodeName) has already been called on this
+     * @requires createGraph(graphName) && nodeName != null &&
      * @modifies graph named graphName
      * @effects Adds a black node represented by the String nodeName to the graph
      *          named graphName.
@@ -44,9 +42,7 @@ public class BipartiteGraphTestDriver {
     }
 
     /**
-     * @requires createGraph(graphName) && nodeName != null && neither
-     *           addBlackNode(graphName,nodeName) nor
-     *           addWhiteNode(graphName,nodeName) has already been called on this
+     * @requires createGraph(graphName) && nodeName != null
      * @modifies graph named graphName
      * @effects Adds a white node represented by the String nodeName to the graph
      *          named graphName.
@@ -71,6 +67,34 @@ public class BipartiteGraphTestDriver {
      */
     public boolean addEdge(String graphName, String parentName, String childName, String edgeLabel) {
         return graphs.get(graphName).addEdge(parentName, childName, edgeLabel);
+    }
+
+    /**
+     * @requires createGraph(graphName) && nodeLabel != null
+     * @modifies graph named graphName
+     * @effects Removes the node labeled {@code nodeLabel}, and all its edges
+     *          (incoming and outgoing) from the graph.<br>
+     *          If no such node exists - this method does not modify this graph.
+     * @return {@code true} - if the node was removed,<br>
+     *         {@code false} - otherwise.
+     */
+    public boolean removeNode(String graphName, String nodeLabel) {
+        return graphs.get(graphName).removeNode(nodeLabel);
+    }
+
+    /**
+     * @requires createGraph(graphName) && parentNodeLabel != null && <br>
+     *           childNodeLabel != null && edgeLabel != null
+     * @modifies graph named graphName
+     * @effects Removes the edge labeled {@code edgeLabel}, which is from the node
+     *          labeled {@code parentNodeLabel} to the node labeled
+     *          {@code childNodeLabel}, from the graph.<br>
+     *          If no such edge exists - this method does not modify this graph.
+     * @return {@code true} - if the edge was removed,<br>
+     *         {@code false} otherwise.
+     */
+    public boolean removeEdge(String graphName, String parentNodeLabel, String childNodeLabel, String edgeLabel) {
+        return graphs.get(graphName).removeEdge(parentNodeLabel, childNodeLabel, edgeLabel);
     }
 
     /**
@@ -133,6 +157,24 @@ public class BipartiteGraphTestDriver {
      */
     public String getParentByEdgeLabel(String graphName, String childName, String edgeLabel) {
         return graphs.get(graphName).getParentByEdgeLabel(childName, edgeLabel);
+    }
+
+    /**
+     * @requires createGraph(graphName) && createNode(nodeLabel)
+     * @return The data of the node labeled {@code nodeLabel} in the graph.
+     */
+    public Object getNodeData(String graphName, String nodeLabel) {
+        return graphs.get(graphName).getNodeData(nodeLabel);
+    }
+
+    /**
+     * @requires createGraph(graphName) && createNode(nodeLabel)
+     * @modifies The node labeled {@code nodeLabel} in the graph {@code graphName}.
+     * @effects Replaces the data of the node labeled {@code nodeLabel} with
+     *          {@code newNodeData}.
+     */
+    public void setNodeData(String graphName, String nodeLabel, Object newNodeData) {
+        graphs.get(graphName).setNodeData(nodeLabel, newNodeData);
     }
 
     /**

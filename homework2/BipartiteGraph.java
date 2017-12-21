@@ -136,6 +136,8 @@ public class BipartiteGraph<L> {
     }
 
     /**
+     * @requires An edge from parentNode and childNode (with any label) does not
+     *           exist.
      * @modifies This.
      * @effects Adds an edge from the node labeled {@code parentNodeLabel} to the
      *          node labeled {@code childNodeLabel} in this graph. The new edge is
