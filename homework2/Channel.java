@@ -50,7 +50,7 @@ public class Channel implements Simulatable<String> {
      * @effects adds a transaction to the working queue. will be handled on the next
      *          call to simulate.
      */
-    public void receiveTransaction(Transaction newTransaction) {
+    public void receiveTransaction(Transaction newTransaction) throws IlligalTransactionException {
         if (this.total + newTransaction.getValue() < limit) {
             throw new IlligalTransactionException();
         }
