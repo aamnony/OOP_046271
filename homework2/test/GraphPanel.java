@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Random;
 import javax.swing.*;
 
-import homework2.BipartiteGraph;
-
 public class GraphPanel extends JComponent {
 
     private static final int WINDOW_HEIGHT = 600;
@@ -23,7 +21,7 @@ public class GraphPanel extends JComponent {
 
     private boolean selecting = false;
 
-    private BipartiteGraph<String> graph = new BipartiteGraph<>();
+    private ColoredGraph<String> graph = new ColoredGraph<>();
 
     public GraphPanel() {
         this.setOpaque(true);
@@ -52,19 +50,26 @@ public class GraphPanel extends JComponent {
     }
 
     protected void buildGraph() {
-        graph.addNode("w1", rndNodeLocation(), true);
-        graph.addNode("w2", rndNodeLocation(), true);
-        graph.addNode("w3", rndNodeLocation(), true);
-        graph.addNode("b1", rndNodeLocation(), false);
-        graph.addNode("b2", rndNodeLocation(), false);
-        graph.addNode("b3", rndNodeLocation(), false);
 
-        graph.addEdge("w1", "b2", "w1-b2");
-        graph.addEdge("b3", "w1", "b3-w1");
-        graph.addEdge("b2", "w2", "b2-w2");
-        graph.addEdge("b3", "w2", "b3-w2");
-        graph.addEdge("b3", "w3", "b3-w3");
-        graph.addEdge("w1", "b1", "w1-b1");
+        int m = RND.nextInt(7) + 1;
+        for (int i = 0; i < m; i++) {
+            graph.addNode(String.valueOf(i), rndNodeLocation(), false);
+        }
+        for (int i = 0; i < 1 + RND.nextInt(m); i++) {
+            graph.addEdge(String.valueOf(i), String.valueOf(1 + RND.nextInt(m)), String.valueOf(RND.nextGaussian()));
+        }
+        /*
+         * graph.addNode("w1", rndNodeLocation(), true); graph.addNode("w2",
+         * rndNodeLocation(), true); graph.addNode("w3", rndNodeLocation(), true);
+         * graph.addNode("b1", rndNodeLocation(), false); graph.addNode("b2",
+         * rndNodeLocation(), false); graph.addNode("b3", rndNodeLocation(), false);
+         * 
+         * graph.addEdge("w1", "b2", "w1-b2"); graph.addEdge("b3", "w1", "b3-w1");
+         * graph.addEdge("b2", "w2", "b2-w2"); graph.addEdge("b3", "w2", "b3-w2");
+         * graph.addEdge("b3", "w3", "b3-w3"); graph.addEdge("w1", "b1", "w1-b1");
+         * graph.addEdge("b2", "w1", "b2-w1"); graph.addEdge("w3", "b2", "w3-b2");
+         * graph.addEdge("w3", "b1", "w3-b1"); graph.addEdge("b1", "w2", "b1-w2");
+         */
     }
 
     private void drawEdges(Graphics g) {
@@ -119,6 +124,8 @@ public class GraphPanel extends JComponent {
         }
     }
 
+    private String lastSelected;
+
     /**
      * Select a single node; return true if not already selected.
      */
@@ -130,9 +137,11 @@ public class GraphPanel extends JComponent {
                     selectNone();
                     nd.selected = true;
                 }
+                lastSelected = node;
                 return true;
             }
         }
+        lastSelected = null;
         return false;
     }
 
@@ -205,9 +214,6 @@ public class GraphPanel extends JComponent {
         public void mouseReleased(MouseEvent e) {
             selecting = false;
             mouseRect.setBounds(0, 0, 0, 0);
-            if (e.isPopupTrigger()) {
-                showPopup(e);
-            }
             e.getComponent().repaint();
         }
 
@@ -215,10 +221,23 @@ public class GraphPanel extends JComponent {
         public void mousePressed(MouseEvent e) {
             mousePt = e.getPoint();
             if (e.isShiftDown()) {
+                selectOne(mousePt);
+                if (lastSelected != null) {
+                    
+                    JFrame f = new JFrame(GraphPanel.this.title + "->" + lastSelected);
+                    // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    GraphPanel gp = new GraphPanel();
+                    f.add(new JScrollPane(gp), BorderLayout.CENTER);
+                    f.pack();
+                    f.setLocationByPlatform(true);
+                    f.setVisible(true);
+                    gp.buildGraph();
+                }
+
+            } else if (e.isControlDown()) {
                 selectToggle(mousePt);
             } else if (e.isPopupTrigger()) {
                 selectOne(mousePt);
-                showPopup(e);
             } else if (selectOne(mousePt)) {
                 selecting = false;
             } else {
@@ -226,10 +245,6 @@ public class GraphPanel extends JComponent {
                 selecting = true;
             }
             e.getComponent().repaint();
-        }
-
-        private void showPopup(MouseEvent e) {
-            // control.popup.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 
@@ -282,7 +297,7 @@ public class GraphPanel extends JComponent {
         EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                JFrame f = new JFrame("GraphPanel");
+                JFrame f = new JFrame("");
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 GraphPanel gp = new GraphPanel();
                 f.add(new JScrollPane(gp), BorderLayout.CENTER);
