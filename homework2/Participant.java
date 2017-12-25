@@ -3,6 +3,17 @@ package homework2;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ *  Represents a filter in the graph, will accept any transaction
+ *  that is passed to it.
+ *  in each simulation step will go over its transactions.
+ *  if it was directed at him will be stored in the storage buffer. 
+ *  otherwise if possible will pass it to the Channel (pipe)
+ *  connected to it while taking a fee out of the transaction.
+ *  if passing transaction to the next Channel is not possible
+ *  store it and try again next time Simulate is called.
+ */
+
 public class Participant implements Simulatable<String> {
 
     private final double fee;
@@ -25,8 +36,9 @@ public class Participant implements Simulatable<String> {
     /**
      * @modifies this, graph
      * @effects Simulates this, goes over all transactions that are currently in
-     *          this.workingBuffer and transfers them to this.storageBuffer or takes
-     *          a fee in the amount this.fee and transfer them to the channel
+     *          this.workingBuffer and transfers them to this.storageBuffer if
+     *          they are directed to him. otherwise will take a fee
+     *          in the amount this.fee and transfer them to the channel
      *          connected to it. will not transfer transaction if channel is full.
      */
     @Override
