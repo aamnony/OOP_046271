@@ -22,8 +22,9 @@ public class Simulator<L, O> {
 
     /**
      * @modifies This.
-     * @effects Simulate a single step for each node in the graph invokes each
-     *          node.data simulate function.
+     * @effects Simulate a single step for each node in the graph.
+     *          goes over all pipes then all filters and
+     *          invokes each node.data simulate function.
      */
     public void simulate() {
         Collection<L> whiteLabels = this.graph.getNodes(/*isWhite=*/true);

@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * @author USER
- *
+ *  Represents a pipe in the graph that doesnt have a transactions
+ *  limit but has a limit to the total amount of transactions
+ *  currently passing through it.
+ *  in each simulation step it passes all of its transactions
+ *  to the Participant (filter) that is connected to it.
+ *  wont accept a transaction from a previous Participant
+ *  if the will set the total transactions value over the limit
  */
 public class Channel implements Simulatable<String> {
 
@@ -42,6 +47,7 @@ public class Channel implements Simulatable<String> {
             Transaction t = iterator.next();
             p.receiveTransaction(t);
             iterator.remove();
+            total = total - t.getValue();
         }
     }
 
@@ -51,9 +57,10 @@ public class Channel implements Simulatable<String> {
      *          call to simulate.
      */
     public void receiveTransaction(Transaction newTransaction) throws IlligalTransactionException {
-        if (this.total + newTransaction.getValue() < limit) {
+        if (this.total + newTransaction.getValue() > limit) {
             throw new IlligalTransactionException();
         }
+        total = total + newTransaction.getValue();
         workingBuffer.add(newTransaction);
     }
 
@@ -62,7 +69,7 @@ public class Channel implements Simulatable<String> {
      *         will overflow given the transaction.
      */
     public boolean canReceiveTransaction(Transaction newTransaction) {
-        if (this.total + newTransaction.getValue() < limit) {
+        if (this.total + newTransaction.getValue() <= limit) {
             return true;
         }
         return false;
