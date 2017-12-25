@@ -1,8 +1,6 @@
 package homework2;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,7 +81,7 @@ public class SimulatorTestDriver {
      * @effects pushes the Transaction into the channel named channelName in the
      *          simulator named simName.
      */
-    public void sendTransaction(String simName, String channelName, Transaction tx) throws IlligalTransactionException {
+    public void sendTransaction(String simName, String channelName, Transaction tx) throws IllegalTransactionException {
         Simulator<String, Transaction> s = this.simulators.get(simName);
         Channel c = (Channel) s.getGraph().getNodeData(channelName);
         c.receiveTransaction(tx);

@@ -7,7 +7,7 @@ import org.junit.Test;
 public class SimulatorTest {
 
     private SimulatorTestDriver driver;
-    
+
     @Test
     public void simpleTest() {
         driver = new SimulatorTestDriver();
@@ -29,11 +29,11 @@ public class SimulatorTest {
 
         assertEquals("c0", "Dest: p3 Value: 10.0 ", driver.listContents("sim", "c0"));
         assertEquals("c1", "", driver.listContents("sim", "c1"));
-        assertEquals("c2", "", driver.listContents("sim", "c1"));        
+        assertEquals("c2", "", driver.listContents("sim", "c1"));
         assertEquals("p1", 0, driver.getParticipantBalace("sim", "p1"), 0);
         assertEquals("p2", 0, driver.getParticipantBalace("sim", "p2"), 0);
         assertEquals("p3", 0, driver.getParticipantBalace("sim", "p3"), 0);
-        
+
         driver.simulate("sim");
         driver.sendTransaction("sim", "c0", t2);
         assertEquals("c0", "Dest: p2 Value: 10.0 ", driver.listContents("sim", "c0"));
@@ -42,24 +42,24 @@ public class SimulatorTest {
         assertEquals("p1", 1, driver.getParticipantBalace("sim", "p1"), 0);
         assertEquals("p2", 0, driver.getParticipantBalace("sim", "p2"), 0);
         assertEquals("p3", 0, driver.getParticipantBalace("sim", "p3"), 0);
-        
+
         driver.simulate("sim");
-        assertEquals("c0","", driver.listContents("sim", "c0"));
+        assertEquals("c0", "", driver.listContents("sim", "c0"));
         assertEquals("c1", "Dest: p2 Value: 9.0 ", driver.listContents("sim", "c1"));
         assertEquals("c2", "Dest: p3 Value: 8.0 ", driver.listContents("sim", "c2"));
         assertEquals("p1", 2, driver.getParticipantBalace("sim", "p1"), 0);
         assertEquals("p2", 1, driver.getParticipantBalace("sim", "p2"), 0);
         assertEquals("p3", 0, driver.getParticipantBalace("sim", "p3"), 0);
-        
+
         driver.simulate("sim");
-        assertEquals("c0","", driver.listContents("sim", "c0"));
+        assertEquals("c0", "", driver.listContents("sim", "c0"));
         assertEquals("c1", "", driver.listContents("sim", "c1"));
         assertEquals("c2", "", driver.listContents("sim", "c2"));
         assertEquals("p1", 2, driver.getParticipantBalace("sim", "p1"), 0);
         assertEquals("p2", 10, driver.getParticipantBalace("sim", "p2"), 0);
         assertEquals("p3", 8, driver.getParticipantBalace("sim", "p3"), 0);
     }
-    
+
     @Test
     public void congestionTest() {
         driver = new SimulatorTestDriver();
@@ -75,27 +75,27 @@ public class SimulatorTest {
         Transaction t2 = new Transaction("p2", 10);
         driver.sendTransaction("sim", "c1", t);
         driver.sendTransaction("sim", "c1", t2);
-        
-        assertEquals("c1","Dest: p2 Value: 10.0 Dest: p2 Value: 10.0 ", driver.listContents("sim", "c1"));
-        assertEquals("c2","", driver.listContents("sim", "c2"));
-        assertEquals("p1", 0, driver.getParticipantBalace("sim", "p1"), 0);
-        assertEquals("p2", 0, driver.getParticipantBalace("sim", "p2"), 0);
-        
-        driver.simulate("sim");
-        assertEquals("c1","", driver.listContents("sim", "c1"));
-        assertEquals("c2","Dest: p2 Value: 10.0 ", driver.listContents("sim", "c2"));
+
+        assertEquals("c1", "Dest: p2 Value: 10.0 Dest: p2 Value: 10.0 ", driver.listContents("sim", "c1"));
+        assertEquals("c2", "", driver.listContents("sim", "c2"));
         assertEquals("p1", 0, driver.getParticipantBalace("sim", "p1"), 0);
         assertEquals("p2", 0, driver.getParticipantBalace("sim", "p2"), 0);
 
         driver.simulate("sim");
-        assertEquals("c1","", driver.listContents("sim", "c1"));
-        assertEquals("c2","Dest: p2 Value: 10.0 ", driver.listContents("sim", "c2"));
+        assertEquals("c1", "", driver.listContents("sim", "c1"));
+        assertEquals("c2", "Dest: p2 Value: 10.0 ", driver.listContents("sim", "c2"));
+        assertEquals("p1", 0, driver.getParticipantBalace("sim", "p1"), 0);
+        assertEquals("p2", 0, driver.getParticipantBalace("sim", "p2"), 0);
+
+        driver.simulate("sim");
+        assertEquals("c1", "", driver.listContents("sim", "c1"));
+        assertEquals("c2", "Dest: p2 Value: 10.0 ", driver.listContents("sim", "c2"));
         assertEquals("p1", 0, driver.getParticipantBalace("sim", "p1"), 0);
         assertEquals("p2", 10, driver.getParticipantBalace("sim", "p2"), 0);
-        
+
         driver.simulate("sim");
-        assertEquals("c1","", driver.listContents("sim", "c1"));
-        assertEquals("c2","", driver.listContents("sim", "c2"));
+        assertEquals("c1", "", driver.listContents("sim", "c1"));
+        assertEquals("c2", "", driver.listContents("sim", "c2"));
         assertEquals("p1", 0, driver.getParticipantBalace("sim", "p1"), 0);
         assertEquals("p2", 20, driver.getParticipantBalace("sim", "p2"), 0);
     }

@@ -4,21 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- *  Represents a filter in the graph, will accept any transaction
- *  that is passed to it.
- *  in each simulation step will go over its transactions.
- *  if it was directed at him will be stored in the storage buffer. 
- *  otherwise if possible will pass it to the Channel (pipe)
- *  connected to it while taking a fee out of the transaction.
- *  if passing transaction to the next Channel is not possible
- *  store it and try again next time Simulate is called.
+ * Represents a filter in the graph, will accept any transaction that is passed
+ * to it. in each simulation step will go over its transactions. if it was
+ * directed at him will be stored in the storage buffer. otherwise if possible
+ * will pass it to the Channel (pipe) connected to it while taking a fee out of
+ * the transaction. if passing transaction to the next Channel is not possible
+ * store it and try again next time Simulate is called.
  */
 
 public class Participant implements Simulatable<String> {
 
     private final double fee;
-    ArrayList<Transaction> storageBuffer;
-    ArrayList<Transaction> workingBuffer;
+    private ArrayList<Transaction> storageBuffer;
+    private ArrayList<Transaction> workingBuffer;
     private String label;
 
     /**
@@ -36,21 +34,21 @@ public class Participant implements Simulatable<String> {
     /**
      * @modifies this, graph
      * @effects Simulates this, goes over all transactions that are currently in
-     *          this.workingBuffer and transfers them to this.storageBuffer if
-     *          they are directed to him. otherwise will take a fee
-     *          in the amount this.fee and transfer them to the channel
-     *          connected to it. will not transfer transaction if channel is full.
+     *          this.workingBuffer and transfers them to this.storageBuffer if they
+     *          are directed to him. otherwise will take a fee in the amount
+     *          this.fee and transfer them to the channel connected to it. will not
+     *          transfer transaction if channel is full.
      */
     @Override
-    public void simulate(BipartiteGraph<String> graph) {        
+    public void simulate(BipartiteGraph<String> graph) {
         Channel c = null;
         Iterator<String> channelIterator = graph.getChildren(this.label).iterator();
-        // there could either be one or zero children (connected outgoing channel) 
-        if(channelIterator.hasNext()) {
+        // there could either be one or zero children (connected outgoing channel)
+        if (channelIterator.hasNext()) {
             String channelLabel = channelIterator.next();
             c = (Channel) graph.getNodeData(channelLabel);
         }
-        
+
         Iterator<Transaction> workIterator = workingBuffer.iterator();
         while (workIterator.hasNext()) {
             Transaction t = workIterator.next();
@@ -62,12 +60,12 @@ public class Participant implements Simulatable<String> {
             } else if (c != null && c.canReceiveTransaction(newTransaction)) {
                 workIterator.remove();
                 c.receiveTransaction(newTransaction);
-                if(fee > 0) {
+                if (fee > 0) {
                     Transaction feeTransaction = new Transaction(this.label, this.fee);
                     this.storageBuffer.add(feeTransaction);
                 }
             }
-        }    
+        }
     }
 
     /**

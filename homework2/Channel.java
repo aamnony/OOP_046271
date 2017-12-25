@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- *  Represents a pipe in the graph that doesnt have a transactions
- *  limit but has a limit to the total amount of transactions
- *  currently passing through it.
- *  in each simulation step it passes all of its transactions
- *  to the Participant (filter) that is connected to it.
- *  wont accept a transaction from a previous Participant
- *  if the will set the total transactions value over the limit
+ * Represents a pipe in the graph that doesn't have a transactions limit but has
+ * a limit to the total amount of transactions currently passing through it. in
+ * each simulation step it passes all of its transactions to the Participant
+ * (filter) that is connected to it. wont accept a transaction from a previous
+ * Participant if the will set the total transactions value over the limit
  */
 public class Channel implements Simulatable<String> {
 
     private final double limit;
     private double total;
-    ArrayList<Transaction> workingBuffer;
+    private ArrayList<Transaction> workingBuffer;
     private String label;
 
     /**
@@ -56,9 +54,9 @@ public class Channel implements Simulatable<String> {
      * @effects adds a transaction to the working queue. will be handled on the next
      *          call to simulate.
      */
-    public void receiveTransaction(Transaction newTransaction) throws IlligalTransactionException {
+    public void receiveTransaction(Transaction newTransaction) throws IllegalTransactionException {
         if (this.total + newTransaction.getValue() > limit) {
-            throw new IlligalTransactionException();
+            throw new IllegalTransactionException();
         }
         total = total + newTransaction.getValue();
         workingBuffer.add(newTransaction);

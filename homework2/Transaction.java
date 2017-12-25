@@ -2,8 +2,8 @@ package homework2;
 
 /**
  * This class implements a transaction in a graph of payment channels. A
- * transaction is immutable. A transaction has a dest who is a participant in a
- * payment channel graph and a value.
+ * transaction is immutable. A transaction has a destination who is a
+ * participant in a payment channel graph and a value.
  */
 
 public class Transaction {
