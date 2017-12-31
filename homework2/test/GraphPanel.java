@@ -51,13 +51,35 @@ public class GraphPanel extends JComponent {
 
     protected void buildGraph() {
 
-        int m = RND.nextInt(7) + 1;
-        for (int i = 0; i < m; i++) {
-            graph.addNode(String.valueOf(i), rndNodeLocation(), false);
-        }
-        for (int i = 0; i < 1 + RND.nextInt(m); i++) {
-            graph.addEdge(String.valueOf(i), String.valueOf(1 + RND.nextInt(m)), String.valueOf(RND.nextGaussian()));
-        }
+        /*
+         * int m = RND.nextInt(7) + 1; for (int i = 0; i < m; i++) {
+         * graph.addNode(String.valueOf(i), rndNodeLocation(), false); } for (int i = 0;
+         * i < 1 + RND.nextInt(m); i++) { graph.addEdge(String.valueOf(i),
+         * String.valueOf(1 + RND.nextInt(m)), String.valueOf(RND.nextGaussian())); }
+         */
+
+        graph.addNode("in1", rndNodeLocation(), true);
+        graph.addNode("in2", rndNodeLocation(), true);
+        graph.addNode("out1", rndNodeLocation(), true);
+        graph.addNode("out2", rndNodeLocation(), true);
+        graph.addNode("mss", rndNodeLocation(), true);
+        graph.addNode("freq", rndNodeLocation(), true);
+        graph.addNode("sin", rndNodeLocation(), true);
+        graph.addNode("music", rndNodeLocation(), true);
+        graph.addNode("counter", rndNodeLocation(), true);
+        graph.addNode("fsm", rndNodeLocation(), true);
+
+        graph.addEdge("in1", "mss", "1");
+        graph.addEdge("in2", "sin", "2");
+        graph.addEdge("mss", "out1", "3");
+        graph.addEdge("music", "mss", "4");
+        graph.addEdge("sin", "mss", "5");
+        graph.addEdge("mss", "freq", "6");
+        graph.addEdge("freq", "counter", "7");
+        graph.addEdge("counter", "fsm", "8");
+        graph.addEdge("fsm", "out2", "9");
+        graph.addEdge("fsm", "music", "0");
+
         /*
          * graph.addNode("w1", rndNodeLocation(), true); graph.addNode("w2",
          * rndNodeLocation(), true); graph.addNode("w3", rndNodeLocation(), true);
@@ -174,9 +196,14 @@ public class GraphPanel extends JComponent {
         for (String node : graph.getNodes()) {
             NodeData nd = (NodeData) graph.getNodeData(node);
             if (nd.selected) {
-                nd.p.x += d.x;
-                nd.p.y += d.y;
-                nd.updateBounds();
+                if (d == null) {
+                    nd.snapToGrid();
+                    nd.updateBounds();
+                } else {
+                    nd.p.x += d.x;
+                    nd.p.y += d.y;
+                    nd.updateBounds();
+                }
             }
         }
     }
@@ -214,6 +241,7 @@ public class GraphPanel extends JComponent {
         public void mouseReleased(MouseEvent e) {
             selecting = false;
             mouseRect.setBounds(0, 0, 0, 0);
+            updatePosition(null);
             e.getComponent().repaint();
         }
 
@@ -223,15 +251,14 @@ public class GraphPanel extends JComponent {
             if (e.isShiftDown()) {
                 selectOne(mousePt);
                 if (lastSelected != null) {
-                    
-                    JFrame f = new JFrame(GraphPanel.this.title + "->" + lastSelected);
-                    // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    GraphPanel gp = new GraphPanel();
-                    f.add(new JScrollPane(gp), BorderLayout.CENTER);
-                    f.pack();
-                    f.setLocationByPlatform(true);
-                    f.setVisible(true);
-                    gp.buildGraph();
+
+                    // JFrame f = new JFrame(GraphPanel.this. + "->" + lastSelected);
+                    // GraphPanel gp = new GraphPanel();
+                    // f.add(new JScrollPane(gp), BorderLayout.CENTER);
+                    // f.pack();
+                    // f.setLocationByPlatform(true);
+                    // f.setVisible(true);
+                    // gp.buildGraph();
                 }
 
             } else if (e.isControlDown()) {
@@ -274,10 +301,49 @@ public class GraphPanel extends JComponent {
         private Rectangle b = new Rectangle();
         private boolean selected = false;
 
+        private final int windowWidth;
+        private final int windowHeight;
+
         NodeData(Random rnd, int w, int h) {
             r = NODE_RADIUS;
-            p = new Point(randomInt(rnd, r, w - r), randomInt(rnd, r, h - r));
+            // p = new Point(randomInt(rnd, r, w - r), randomInt(rnd, r, h - r));
+            p = new Point(randomInt(rnd, 0, w), randomInt(rnd, 0, h));
+            windowWidth = w;
+            windowHeight = h;
+            snapToGrid();
             updateBounds();
+        }
+        
+        NodeData(int gridX, int gridY, int w, int h) {
+            r = NODE_RADIUS;
+            windowWidth = w;
+            windowHeight = h;
+            
+            final int GRID_BLOCKS_X = 5;
+            final int GRID_BLOCKS_Y = 5;
+
+            int gridWidth = windowWidth / GRID_BLOCKS_X;
+            int gridHeight = windowHeight / GRID_BLOCKS_Y;
+            
+            p = new Point();
+            p.x = (gridX * gridWidth) + (gridWidth / 2);
+            p.y = (gridY * gridHeight) + (gridHeight / 2);
+            
+            updateBounds();
+        }
+
+        private void snapToGrid() {
+            final int GRID_BLOCKS_X = 5;
+            final int GRID_BLOCKS_Y = 5;
+
+            int gridWidth = windowWidth / GRID_BLOCKS_X;
+            int gridHeight = windowHeight / GRID_BLOCKS_Y;
+
+            int gridX = (p.x / gridWidth);
+            int gridY = (p.y / gridHeight);
+
+            p.x = (gridX * gridWidth) + (gridWidth / 2);
+            p.y = (gridY * gridHeight) + (gridHeight / 2);
         }
 
         private void updateBounds() {
@@ -298,6 +364,7 @@ public class GraphPanel extends JComponent {
 
             public void run() {
                 JFrame f = new JFrame("");
+                // f.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 GraphPanel gp = new GraphPanel();
                 f.add(new JScrollPane(gp), BorderLayout.CENTER);
