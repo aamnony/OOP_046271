@@ -1,6 +1,9 @@
 package homework4;
 import java.util.Random;
 
+/**
+ * Implement a color change by random order 
+ */
 public class RandomStrategy implements ColorChangeStrategy {
     @Override
     public int[] GetColorChangeOrder() {

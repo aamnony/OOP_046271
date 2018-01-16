@@ -1,27 +1,47 @@
 package homework4;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
+import javax.swing.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+/**
+ * A Billboard object will create a GUI window with 25 Panels in it.
+ * it observes ColorGenerator to indicate its Panels need a color update.
+ * the Panels with be updated in an order according to ColorChangeStrategy.
+ */
 public class Billboard extends JFrame{    
     
-    private static final int WINDOW_WIDTH = 500;
-    private static final int WINDOW_HEIGHT = 500;
-    
-    protected final int PanelNum = 25;
+    private static final int PANELS_IN_ROW = 5;
+    private static final int WINDOW_SIZE = 100 * PANELS_IN_ROW;
+
+    protected final int PanelNum = PANELS_IN_ROW*PANELS_IN_ROW;
     protected Panel[] Panels;
     ColorChangeStrategy strategy;
     
-    public Billboard(ColorChangeStrategy _strategy) {
+    // Abstraction Function:
+    // Represents a Billboard that changes its panels color according
+    // to ColorChangeStrategy strategy whenever UpdatePanels is called.
+
+    // Representation Invariant:
+    // (this.strategy != null)
+    
+    /**
+     * @effects Checks to see if the representation invariant is being violated.
+     * @throws AssertionError
+     *             if the representation invariant is violated.
+     */
+    private void checkRep() {   
+        assert (this.strategy != null) : "strategy cant be null";
+    }
+    
+    /**
+     * @effects Creates a new Billboard with ColorChangeStrategy strategy.
+     */
+    public Billboard(ColorChangeStrategy _strategy){
         this.strategy = _strategy;
         JPanel mainPanel = new JPanel();
         getContentPane().add(mainPanel);
         
-        mainPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+        mainPanel.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
         mainPanel.setBorder(BorderFactory.createLoweredBevelBorder());
         mainPanel.setBackground(Color.WHITE);
         
@@ -31,12 +51,21 @@ public class Billboard extends JFrame{
         this.setVisible(true);
             
         Panels = new Panel[PanelNum];
-        for(int i = 0; i < PanelNum; i++) {
-            Panels[i] = new Panel(i);
+        for(int index = 0; index < PanelNum; index++) {
+            int x = index % PANELS_IN_ROW;
+            int y = index / PANELS_IN_ROW;
+            Point panelLocation = new Point(x,y);
+            Panels[index] = new Panel(panelLocation, WINDOW_SIZE/PANELS_IN_ROW);
         }
+        
+        checkRep();
     }
     
-    public void UpdatePanels(Color color) {
+    /**
+     * @effects Updates the Billboards panels color
+     *          according to its strategy.
+     */
+    public void UpdatePanels(Color color){
         int[] order = strategy.GetColorChangeOrder();
         try {
             for(int i = 0; i < 25; i++) {

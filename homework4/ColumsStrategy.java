@@ -1,5 +1,8 @@
 package homework4;
 
+/**
+ * Implement a color change by columns order 
+ */
 public class ColumsStrategy implements ColorChangeStrategy {   
     @Override
     public int[] GetColorChangeOrder() {

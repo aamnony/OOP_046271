@@ -1,5 +1,8 @@
 package homework4;
 
+/**
+ * Implement a color change by rows order 
+ */
 public class RowsStrategy implements ColorChangeStrategy {
         @Override
     public int[] GetColorChangeOrder() {
