@@ -2,8 +2,8 @@ package homework4;
 
 /**
  * Implement a color change by two rounds order
- * first rounds all even Panels.
- * second round all uneven Panels. 
+ * first round - all even Panels.
+ * second round - all uneven Panels. 
  */
 public class TwoRoundsStrategy implements ColorChangeStrategy {    
     @Override

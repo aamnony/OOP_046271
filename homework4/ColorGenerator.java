@@ -12,7 +12,7 @@ import javax.swing.*;
 
 /**
  * ColorGenerator is a Singelton Observeable by Different BillBoards.
- * every 20 seconds it will change its generate a random color and update
+ * every 20 seconds it will generate a random color and update
  * all of its BillBoards that will in turn update their respective Panels. 
  */
 public class ColorGenerator{

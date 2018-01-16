@@ -6,7 +6,7 @@ import javax.swing.*;
 /**
  * A Billboard object will create a GUI window with 25 Panels in it.
  * it observes ColorGenerator to indicate its Panels need a color update.
- * the Panels with be updated in an order according to ColorChangeStrategy.
+ * the Panels will be updated in an order according to ColorChangeStrategy.
  */
 public class Billboard extends JFrame{    
     
@@ -74,7 +74,6 @@ public class Billboard extends JFrame{
                 Thread.sleep(40);
             }
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
