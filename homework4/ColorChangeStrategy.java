@@ -1,5 +1,5 @@
 package homework4;
 
-public interface Strategy {
+public interface ColorChangeStrategy {
     public int[] GetColorChangeOrder();
 }

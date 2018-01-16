@@ -7,15 +7,17 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public abstract class Billboard extends JFrame implements Strategy{    
+public class Billboard extends JFrame{    
     
     private static final int WINDOW_WIDTH = 500;
     private static final int WINDOW_HEIGHT = 500;
     
     protected final int PanelNum = 25;
     protected Panel[] Panels;
+    ColorChangeStrategy strategy;
     
-    public Billboard() {
+    public Billboard(ColorChangeStrategy _strategy) {
+        this.strategy = _strategy;
         JPanel mainPanel = new JPanel();
         getContentPane().add(mainPanel);
         
@@ -35,7 +37,7 @@ public abstract class Billboard extends JFrame implements Strategy{
     }
     
     public void UpdatePanels(Color color) {
-        int[] order = GetColorChangeOrder();
+        int[] order = strategy.GetColorChangeOrder();
         try {
             for(int i = 0; i < 25; i++) {
                 int PanelIndex = order[i];
