@@ -8,12 +8,11 @@ public class Test {
         Billboard columsBillboard = new Billboard(new ColumsStrategy());
         Billboard twoRoundsBillboard = new Billboard(new TwoRoundsStrategy());
         Billboard randomBillboard = new Billboard(new RandomStrategy());
-        
-        
-        generator.AddBillboard(rowsBillboard);
-        generator.AddBillboard(columsBillboard);
-        generator.AddBillboard(twoRoundsBillboard);
-        generator.AddBillboard(randomBillboard);
+
+        generator.addBillboard(rowsBillboard);
+        generator.addBillboard(columsBillboard);
+        generator.addBillboard(twoRoundsBillboard);
+        generator.addBillboard(randomBillboard);
 
     }
 }

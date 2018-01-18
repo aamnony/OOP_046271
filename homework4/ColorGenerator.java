@@ -11,11 +11,11 @@ import java.util.Random;
 import javax.swing.*;
 
 /**
- * ColorGenerator is a Singelton Observeable by Different BillBoards.
- * every 20 seconds it will generate a random color and update
- * all of its BillBoards that will in turn update their respective Panels. 
+ * ColorGenerator is a Singleton Observable by Different BillBoards. every 20
+ * seconds it will generate a random color and update all of its BillBoards that
+ * will in turn update their respective Panels.
  */
-public class ColorGenerator{
+public class ColorGenerator {
 
     private static ColorGenerator colorGenerator = null;
     private Collection<Billboard> billboards = new HashSet<>();
@@ -25,33 +25,32 @@ public class ColorGenerator{
     // Represents the ColorGenerator for the system.
     // will generate a random color every 20 seconds and update
     // all observers
-    
+
     // Representation Invariant:
-    // this class doesn't have any fields that change value during its life. 
-    
+    // this class doesn't have any fields that change value during its life.
+
     /**
      * @effects Constructs a new ColorGenetaor, notice this is a protected method,
      *          can only be called from GetInstance
-     * @returns the ColorGenerator instance. 
+     * @returns the ColorGenerator instance.
      */
-    protected ColorGenerator() {
+    public ColorGenerator() {
         random = new Random();
-        
+
         Timer timer = new Timer(2000, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 Color color = getRandomColor();
-                for (Iterator<Billboard> iterator = billboards.iterator(); iterator.hasNext();) {
-                    Billboard billboard = iterator.next();
-                    billboard.UpdatePanels(color);
+                for (Billboard billboard : billboards) {
+                    billboard.updatePanels(color);
                 }
             }
         });
-        
+
         timer.start();
     }
-    
+
     /**
-     * @returns a random color. 
+     * @returns a random color.
      */
     private Color getRandomColor() {
         float r = random.nextFloat();
@@ -62,19 +61,18 @@ public class ColorGenerator{
     }
 
     /**
-     * @returns the ColorGenerator instance. 
+     * @returns the ColorGenerator instance.
      */
     public static ColorGenerator getInstance() {
-        if (colorGenerator == null)
-            colorGenerator = new ColorGenerator();
+        if (colorGenerator == null) colorGenerator = new ColorGenerator();
         return colorGenerator;
-    } 
-    
+    }
+
     /**
-     * @effects Add a billboard to the list of BillBoards that
-     *          observe ColorGenerator. 
+     * @effects Add a billboard to the list of BillBoards that observe
+     *          ColorGenerator.
      */
-    public void AddBillboard(Billboard billboard) {
+    public void addBillboard(Billboard billboard) {
         billboards.add(billboard);
     }
 }
