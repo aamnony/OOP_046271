@@ -31,7 +31,7 @@ public class ColorGenerator extends Observable{
      *          can only be called from GetInstance
      * @returns the ColorGenerator instance.
      */
-    private ColorGenerator() {
+    protected ColorGenerator() {
         random = new Random();
         
         Timer timer = new Timer(2000, new ActionListener() {
