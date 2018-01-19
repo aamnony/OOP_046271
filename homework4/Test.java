@@ -9,10 +9,10 @@ public class Test {
         Billboard twoRoundsBillboard = new Billboard(new TwoRoundsStrategy());
         Billboard randomBillboard = new Billboard(new RandomStrategy());
 
-        generator.addBillboard(rowsBillboard);
-        generator.addBillboard(columsBillboard);
-        generator.addBillboard(twoRoundsBillboard);
-        generator.addBillboard(randomBillboard);
+        generator.addObserver(rowsBillboard);
+        generator.addObserver(columsBillboard);
+        generator.addObserver(twoRoundsBillboard);
+        generator.addObserver(randomBillboard);
 
     }
 }

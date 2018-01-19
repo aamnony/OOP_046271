@@ -3,12 +3,15 @@ package homework4;
 import java.awt.*;
 import javax.swing.*;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * A Billboard object will create a GUI window with 25 Panels in it. it observes
  * ColorGenerator to indicate its Panels need a color update. the Panels will be
  * updated in an order according to ColorChangeStrategy.
  */
-public class Billboard extends JFrame {
+public class Billboard extends JFrame implements Observer{
 
     private static final int PANELS_IN_ROW = 5;
     private static final int WINDOW_SIZE = 100 * PANELS_IN_ROW;
@@ -61,10 +64,11 @@ public class Billboard extends JFrame {
         checkRep();
     }
 
+    @Override
     /**
      * @effects Updates the Billboards panels color according to its strategy.
      */
-    public void updatePanels(Color color) {
+    public void update(Observable arg0, Object arg1) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -72,7 +76,7 @@ public class Billboard extends JFrame {
                 try {
                     for (int i = 0; i < 25; i++) {
                         int panelIndex = order[i];
-                        panels[panelIndex].updateColor(color, getContentPane().getGraphics());
+                        panels[panelIndex].updateColor((Color) arg1, getContentPane().getGraphics());
                         Thread.sleep(40);
                     }
                 } catch (InterruptedException e) {

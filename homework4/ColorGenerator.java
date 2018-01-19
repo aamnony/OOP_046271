@@ -3,10 +3,8 @@ package homework4;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Random;
+import java.util.Observable;
 
 import javax.swing.*;
 
@@ -15,10 +13,9 @@ import javax.swing.*;
  * seconds it will generate a random color and update all of its BillBoards that
  * will in turn update their respective Panels.
  */
-public class ColorGenerator {
+public class ColorGenerator extends Observable{
 
     private static ColorGenerator colorGenerator = null;
-    private Collection<Billboard> billboards = new HashSet<>();
     private Random random;
 
     // Abstraction Function:
@@ -34,15 +31,14 @@ public class ColorGenerator {
      *          can only be called from GetInstance
      * @returns the ColorGenerator instance.
      */
-    public ColorGenerator() {
+    private ColorGenerator() {
         random = new Random();
-
+        
         Timer timer = new Timer(2000, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 Color color = getRandomColor();
-                for (Billboard billboard : billboards) {
-                    billboard.updatePanels(color);
-                }
+                setChanged();
+                notifyObservers(color);
             }
         });
 
@@ -66,13 +62,5 @@ public class ColorGenerator {
     public static ColorGenerator getInstance() {
         if (colorGenerator == null) colorGenerator = new ColorGenerator();
         return colorGenerator;
-    }
-
-    /**
-     * @effects Add a billboard to the list of BillBoards that observe
-     *          ColorGenerator.
-     */
-    public void addBillboard(Billboard billboard) {
-        billboards.add(billboard);
     }
 }
