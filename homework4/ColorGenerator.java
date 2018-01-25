@@ -57,7 +57,7 @@ public class ColorGenerator extends Observable{
     }
 
     /**
-     * @returns the ColorGenerator instance.
+     * @return the ColorGenerator instance.
      */
     public static ColorGenerator getInstance() {
         if (colorGenerator == null) colorGenerator = new ColorGenerator();
